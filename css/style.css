@@ -3,8 +3,9 @@
 }
 
 .washi-bg {
-  background-image: radial-gradient(rgba(210, 195, 198, 0.3) 0.5px, transparent 0.5px);
-  background-size: 16px 16px;
+  background-color: #faf9f6;
+  background-image: radial-gradient(rgba(210, 195, 198, 0.25) 1px, transparent 1px);
+  background-size: 24px 24px;
   background-attachment: fixed;
 }
 
