@@ -1,8 +1,10 @@
 const MAX_BLOSSOMS = 30;
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function initSakura(mode) {
   const container = document.getElementById("sakura-container");
   if (!container) return;
+  if (prefersReducedMotion) return;
   container.innerHTML = "";
   if (mode === "decorative") {
     for (let i = 0; i < 15; i++) createPetal(container);
@@ -26,7 +28,7 @@ function createPetal(container) {
 
 function updateSakura(correct, total) {
   const container = document.getElementById("sakura-container");
-  if (!container) return;
+  if (!container || prefersReducedMotion) return;
   const target = total === 0 ? 0 : Math.floor((correct / total) * MAX_BLOSSOMS);
   const current = container.children.length;
   if (target > current) {

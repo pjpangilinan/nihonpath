@@ -34,6 +34,12 @@
   100% { transform: translateY(110vh) rotate(360deg) scale(1); opacity: 0; }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .petal { animation: none; display: none; }
+  .petal-static { animation: none; opacity: 0.6; }
+  #sakura-container { display: none; }
+}
+
 .petal-static {
   position: absolute;
   font-size: 1.5rem;
@@ -62,4 +68,17 @@
 }
 .char-card:hover .romaji-label {
   opacity: 1;
+}
+
+button:focus-visible,
+a:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid #73575f;
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+body {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }

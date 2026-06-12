@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#faf9f6">
 <title>NihonPath — Kanji Explorer</title>
 <link href="https://fonts.googleapis.com" rel="preconnect">
 <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
@@ -55,8 +57,9 @@ tailwind.config = {
 <link rel="prefetch" href="progress.html">
 </head>
 <body class="text-on-surface antialiased min-h-screen flex flex-col washi-bg">
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:bg-surface focus:text-on-surface focus:p-3 focus:rounded-lg focus:shadow-lg">Skip to main content</a>
 <div id="sakura-container"></div>
-<nav class="hidden md:flex bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 fixed top-0 w-full z-50 justify-between items-center px-6 py-4">
+<nav aria-label="Main navigation" class="hidden md:flex bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 fixed top-0 w-full z-50 justify-between items-center px-6 py-4">
   <div class="font-headline-md text-headline-md font-bold text-primary">NihonPath</div>
   <ul class="flex items-center gap-gutter">
     <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="index.html">Home</a></li>
@@ -65,66 +68,66 @@ tailwind.config = {
     <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="combined.html">Combined</a></li>
     <li><a class="block py-1 text-primary font-bold border-b-2 border-primary" href="kanji.html">Kanji</a></li>
   </ul>
-  <a class="text-secondary hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-container-high" href="progress.html">
-    <span class="material-symbols-outlined">account_circle</span>
+  <a aria-label="Progress" class="text-secondary hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-container-high" href="progress.html">
+    <span class="material-symbols-outlined" aria-hidden="true">account_circle</span>
   </a>
 </nav>
-<main class="relative z-10 flex-grow pt-[96px] pb-[100px] md:pb-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex flex-col gap-stack-lg">
+<main id="main-content" class="relative z-10 flex-grow pt-[96px] pb-[100px] md:pb-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex flex-col gap-stack-lg">
   <section class="mb-0 text-center md:text-left">
     <h1 class="text-[24px] font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-primary">Kanji Explorer</h1>
     <p class="font-body-lg text-body-lg text-on-surface-variant">Master the foundations of JLPT N5. Select characters to build your custom quiz.</p>
   </section>
-  <section class="bg-surface-container-low rounded-xl p-stack-md shadow-sm border border-outline-variant/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-stack-md">
-    <div class="flex flex-wrap gap-stack-sm w-full md:w-auto">
-      <button id="reshuffle-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-bright border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-colors w-full md:w-auto justify-center">
-        <span class="material-symbols-outlined text-[20px]">shuffle</span>
-        <span class="font-body-md font-medium">Reshuffle Grid</span>
-      </button>
-      <button id="select-all-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-bright border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-colors w-full md:w-auto justify-center">
-        <span class="material-symbols-outlined text-[20px]">checklist</span>
-        <span class="font-body-md font-medium">Select All Visible</span>
-      </button>
-    </div>
-    <div class="flex flex-col md:flex-row items-center gap-stack-sm w-full md:w-auto">
-      <div class="flex bg-surface-container-high rounded-lg p-1 w-full md:w-auto">
-        <button id="mode-romaji" class="flex-1 md:flex-none px-4 py-2 rounded-md bg-surface-bright shadow-sm text-on-surface font-body-md font-medium transition-all">Test Romaji</button>
-        <button id="mode-meaning" class="flex-1 md:flex-none px-4 py-2 rounded-md text-on-surface-variant hover:text-on-surface font-body-md font-medium transition-all">Test Meaning</button>
-      </div>
-      <button id="start-quiz-btn" class="flex-1 md:flex-none px-6 py-2 rounded-lg bg-primary text-on-primary font-body-md font-medium shadow-sm hover:shadow-md hover:bg-surface-tint transition-all flex items-center justify-center gap-2">
-        <span class="material-symbols-outlined text-[20px]">play_arrow</span> Start Quiz
-      </button>
-    </div>
-  </section>
   <section class="flex items-center gap-2 text-primary font-headline-md text-headline-md px-1">
-    <span class="material-symbols-outlined">select_check_box</span>
+    <span class="material-symbols-outlined" aria-hidden="true">select_check_box</span>
     <span>Selected: <strong class="font-bold" id="selected-count">0</strong></span>
   </section>
   <section class="grid grid-cols-5 sm:grid-cols-5 md:grid-cols-4 lg:grid-cols-6 gap-1" id="kanji-grid"></section>
+  <section class="bg-surface-container-low rounded-xl p-stack-md shadow-sm border border-outline-variant/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-stack-md">
+    <div class="flex flex-wrap gap-stack-sm w-full">
+      <button id="reshuffle-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-bright border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-colors w-full justify-center">
+        <span class="material-symbols-outlined text-[20px]" aria-hidden="true">shuffle</span>
+        <span class="font-body-md font-medium">Reshuffle Grid</span>
+      </button>
+      <button id="select-all-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-bright border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-colors w-full justify-center">
+        <span class="material-symbols-outlined text-[20px]" aria-hidden="true">checklist</span>
+        <span class="font-body-md font-medium">Select All Visible</span>
+      </button>
+    </div>
+    <div class="flex flex-col md:flex-row items-center gap-stack-sm w-full">
+      <div class="flex bg-surface-container-high rounded-lg p-1 w-full">
+        <button id="mode-romaji" class="flex-1 px-4 py-2 rounded-md bg-surface-bright shadow-sm text-on-surface font-body-md font-medium transition-colors">Test Romaji</button>
+        <button id="mode-meaning" class="flex-1 px-4 py-2 rounded-md text-on-surface-variant hover:text-on-surface font-body-md font-medium transition-colors">Test Meaning</button>
+      </div>
+      <button id="start-quiz-btn" class="flex-1 px-6 py-2 rounded-lg bg-primary text-on-primary font-body-md font-medium shadow-sm hover:shadow-md hover:bg-surface-tint transition-all flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined text-[20px]" aria-hidden="true">play_arrow</span> Start Quiz
+      </button>
+    </div>
+  </section>
   <section id="quiz-container" class="hidden bg-surface-bright rounded-xl border border-outline-variant/30 p-gutter shadow-sm"></section>
 </main>
-<nav class="md:hidden bg-surface border-t border-outline-variant/20 shadow-sm fixed bottom-0 left-0 w-full z-50 flex items-stretch overflow-hidden rounded-t-xl">
+<nav aria-label="Main navigation" class="md:hidden bg-surface border-t border-outline-variant/20 shadow-sm fixed bottom-0 left-0 w-full z-50 flex items-stretch overflow-hidden rounded-t-xl">
   <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="index.html">
-    <span class="material-symbols-outlined text-[20px]">home</span>
+    <span class="material-symbols-outlined text-[20px]" aria-hidden="true">home</span>
     <span class="font-bold text-[9px] tracking-normal">Home</span>
   </a>
   <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="hiragana.html">
-    <span class="material-symbols-outlined text-[20px]">language_japanese_kana</span>
+    <span class="material-symbols-outlined text-[20px]" aria-hidden="true">language_japanese_kana</span>
     <span class="font-bold text-[9px] tracking-normal">Hiragana</span>
   </a>
   <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="katakana.html">
-    <span class="material-symbols-outlined text-[20px]">menu_book</span>
+    <span class="material-symbols-outlined text-[20px]" aria-hidden="true">menu_book</span>
     <span class="font-bold text-[9px] tracking-normal">Katakana</span>
   </a>
   <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="combined.html">
-    <span class="material-symbols-outlined text-[20px]">layers</span>
+    <span class="material-symbols-outlined text-[20px]" aria-hidden="true">layers</span>
     <span class="font-bold text-[9px] tracking-normal">Combined</span>
   </a>
   <a class="flex-1 flex flex-col items-center justify-center py-2 bg-primary-container text-on-primary-container" href="kanji.html">
-    <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">translate</span>
+    <span class="material-symbols-outlined text-[20px]" aria-hidden="true" style="font-variation-settings: 'FILL' 1;">translate</span>
     <span class="font-bold text-[9px] tracking-normal">Kanji</span>
   </a>
   <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="progress.html">
-    <span class="material-symbols-outlined text-[20px]">leaderboard</span>
+    <span class="material-symbols-outlined text-[20px]" aria-hidden="true">leaderboard</span>
     <span class="font-bold text-[9px] tracking-normal">Progress</span>
   </a>
 </nav>
@@ -159,14 +162,16 @@ function renderKanjiGrid() {
   grid.innerHTML = "";
 
   currentDisplay.forEach(d => {
-    const card = document.createElement("div");
-    card.className = "kanji-card relative group cursor-pointer bg-surface-bright border border-primary-fixed-dim rounded-xl p-1 flex flex-col items-center justify-center aspect-[1/1] transition-all duration-300 hover:shadow-md";
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "kanji-card relative group bg-surface-bright border border-primary-fixed-dim rounded-xl p-1 flex flex-col items-center justify-center aspect-[1/1] transition-[color,background-color,border-color,box-shadow] duration-300 hover:shadow-md";
+    card.setAttribute("aria-label", `${d.char} - ${d.romaji} - ${d.meaning}`);
     card.innerHTML = `
       <div class="selection-indicator absolute top-1 left-1 w-4 h-4 rounded-full border-2 border-outline-variant flex items-center justify-center transition-colors">
-        <span class="material-symbols-outlined text-[12px] text-surface-bright opacity-0">check</span>
+        <span class="material-symbols-outlined text-[12px] text-surface-bright opacity-0" aria-hidden="true">check</span>
       </div>
         <div class="font-japanese-character text-[20px] text-on-surface mb-1 mt-1 select-none">${d.char}</div>
-      <div class="w-full mt-auto opacity-0 group-hover:opacity-100 transition-opacity text-center flex flex-col items-center bg-surface-container-low p-1.5 rounded-md absolute bottom-1 left-1 right-1 w-[calc(100%-8px)]">
+      <div class="w-full mt-auto opacity-0 group-hover:opacity-100 transition-opacity text-center flex flex-col items-center bg-surface-container-low p-1.5 rounded-md absolute bottom-1 left-1 right-1">
         <span class="font-label-caps text-label-caps text-primary">${d.romaji}</span>
         <span class="font-body-md text-[11px] text-on-surface-variant truncate w-full">${d.meaning}</span>
       </div>
@@ -224,14 +229,14 @@ document.getElementById("select-all-btn").addEventListener("click", () => {
 
 document.getElementById("mode-romaji").addEventListener("click", () => {
   quizMode = "romaji";
-  document.getElementById("mode-romaji").className = "flex-1 md:flex-none px-4 py-2 rounded-md bg-surface-bright shadow-sm text-on-surface font-body-md font-medium transition-all";
-  document.getElementById("mode-meaning").className = "flex-1 md:flex-none px-4 py-2 rounded-md text-on-surface-variant hover:text-on-surface font-body-md font-medium transition-all";
+  document.getElementById("mode-romaji").className = "flex-1 px-4 py-2 rounded-md bg-surface-bright shadow-sm text-on-surface font-body-md font-medium transition-all";
+  document.getElementById("mode-meaning").className = "flex-1 px-4 py-2 rounded-md text-on-surface-variant hover:text-on-surface font-body-md font-medium transition-all";
 });
 
 document.getElementById("mode-meaning").addEventListener("click", () => {
   quizMode = "meaning";
-  document.getElementById("mode-meaning").className = "flex-1 md:flex-none px-4 py-2 rounded-md bg-surface-bright shadow-sm text-on-surface font-body-md font-medium transition-all";
-  document.getElementById("mode-romaji").className = "flex-1 md:flex-none px-4 py-2 rounded-md text-on-surface-variant hover:text-on-surface font-body-md font-medium transition-all";
+  document.getElementById("mode-meaning").className = "flex-1 px-4 py-2 rounded-md bg-surface-bright shadow-sm text-on-surface font-body-md font-medium transition-all";
+  document.getElementById("mode-romaji").className = "flex-1 px-4 py-2 rounded-md text-on-surface-variant hover:text-on-surface font-body-md font-medium transition-all";
 });
 
 startBtn.addEventListener("click", () => {

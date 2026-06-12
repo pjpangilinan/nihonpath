@@ -144,3 +144,46 @@ python3 -m http.server 8080
 
 ## Commit Message Draft
 `feat: gojuon table layout, kanji 5x5 mobile, smaller cards, full-width buttons, reset progress`
+
+## Round 9 Changes (2026-06-12)
+1. **Desktop: gojuon table** — Scrapped flat dense grid. Rebuilt as traditional 5-column gojuon table: rows = consonant groups, columns = vowels (A/I/U/E/O). CSS Grid `auto repeat(5, 1fr)`.
+2. **Column-select buttons top** — 5 vowel buttons (A/I/U/E/O) in header row. Click toggles all chars with matching vowel ending.
+3. **Row-select buttons left** — Per-group button in first column. Label derived from group key (A/K/S/T/N/H/M/Y/R/W/Nₙ/G/Z/D/B/P).
+4. **Visual separator** — Thin line before dakuten rows (ga-row and below).
+5. **Empty cells** — Missing chars (yi/ye in ya-row, wi/we in wa-row) rendered as empty square placeholders.
+6. **n-row** — ん/n placed in first cell of its row (no vowel ending → non-vowel branch).
+7. **Romaji bigger** — `text-[5px]` → `text-[9px]` in card hover. Fixes combined.html complaint.
+8. **Mobile unchanged** — Per-group grid (`grid-cols-5`) kept as-is.
+
+## Round 10 Revert (2026-06-12)
+1. **Gojuon table scrapped** — Reverted to flat dense grid (RTL, vowel buttons right).
+2. **Gap 2px → 4px** — Desktop grid, vowel column, mobile grid all `gap-[4px]`.
+3. **Romaji 9px** — Kept from gojuon round. No revert on that.
+4. **Mobile** — grid-cols-5, gap-[4px], row headers with toggle. Unchanged.
+
+## Round 11 Fix (2026-06-12)
+1. **Proper gojuon chart** — Columns = consonant groups. Flex `row-reverse` for RTL ordering. Each group = `flex-col` with 5 cells (a/i/u/e/o top→bottom). Matches `hiragana-katakana-chart.html` reference layout.
+2. **Column select buttons** — At top of each consonant column. Label derived from group key (A/K/S/T/N/H/M/Y/R/W/N/G/Z/D/B/P). Toggles all 5 chars in that column.
+3. **Vowel buttons** — Kept on right side. Select by vowel sound (A/I/U/E/O) across all columns.
+4. **Empty cells** — Dashed border, reduced opacity for missing combos (yi/ye, wi/we, etc.).
+5. **Dakuten spacer** — 16px gap between n-row and ga-row columns.
+6. **Column width** — `w-14` (56px) fixed, matched to reference sizing.
+7. **Mobile** — unchanged.
+
+## Web Design Guidelines Fixes (2026-06-12)
+1. **Focus states** — Added `button:focus-visible, a:focus-visible, [tabindex]:focus-visible` outline+offset to `style.css`.
+2. **Semantic buttons** — Chart cards (`js/chart.js`): `<div>` → `<button type="button">`, added `aria-label` with char+romaji. Kanji cards (`kanji.html`): same pattern.
+3. **Aria labels/hidden** — `aria-label="Progress"` on nav account_circle links. `aria-hidden="true"` on all decorative icon spans (bottom nav, card icons, buttons).
+4. **Skip link** — Added `<a href="#main-content">Skip to main content</a>` before nav on all pages. `id="main-content"` on `<main>`.
+5. **Meta tags** — `<meta name="color-scheme">` + `<meta name="theme-color">` on all pages.
+6. **Reduced motion** — `prefersReducedMotion` check in `sakura.js`: skips petal creation/animation. CSS `.petal { display: none; }` under `@media (prefers-reduced-motion: reduce)`.
+7. **Combined tabs ARIA** — `role="tablist"`, `role="tab"`, `aria-selected`, arrow key navigation (Left/Right).
+8. **Progress reset confirmation** — `confirm()` dialog before clearing localStorage.
+9. **Quiz input** — Added `aria-label`, placeholder `...` → `…` (ellipsis char).
+10. **Touch/scroll** — `touch-action: manipulation`, `-webkit-tap-highlight-color: transparent` on body.
+11. **Transition specificity** — Index nav cards/kanji cards: `transition-all` → `transition-[color,background-color,border-color,box-shadow]`. Chart cards same.
+12. **Bottom nav** — Added `aria-label="Main navigation"`, `aria-current="page"` on active link.
+
+## Handoff Notes
+- 2026-06-12: Proper gojuon chart. Columns = consonant groups, RTL order. Column select buttons top. Vowel buttons right. Empty cells dashed. Mobile same.
+- 2026-06-12: Web design guidelines (accessibility) fixes applied across all 6 HTML + 4 JS + CSS. Focus states, semantic buttons, ARIA labels, skip link, reduced motion, tab interaction, confirmation dialogs. All JS passes `node --check`.

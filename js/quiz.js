@@ -66,7 +66,7 @@ function startQuiz(container, pool, mode, section, callbacks) {
         <div class="flex items-center justify-center gap-4 mb-6">${charsHtml}</div>
         ${mode === "meaning" ? '<div class="font-body-lg text-body-lg text-secondary mb-4">Type the English meaning:</div>' : '<div class="font-body-lg text-body-lg text-secondary mb-4">Type the romaji reading:</div>'}
         <div class="flex items-center justify-center gap-3 max-w-md mx-auto">
-          <input type="text" id="quiz-input" class="flex-1 px-4 py-3 rounded-xl bg-surface-bright border border-outline-variant text-on-surface text-center text-lg font-body-md outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all" placeholder="Your answer..." autofocus>
+          <input type="text" id="quiz-input" class="flex-1 px-4 py-3 rounded-xl bg-surface-bright border border-outline-variant text-on-surface text-center text-lg font-body-md outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all" placeholder="Your answer\u2026" aria-label="Type your answer" autofocus>
           <button id="quiz-submit" class="px-6 py-3 rounded-xl bg-primary text-on-primary font-body-md font-semibold hover:bg-surface-tint transition-colors shadow-sm">Submit</button>
         </div>
         <div id="quiz-feedback" class="mt-4 min-h-[32px]"></div>
