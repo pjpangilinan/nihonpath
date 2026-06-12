@@ -79,6 +79,7 @@ a:focus-visible,
 }
 
 body {
+  background-color: #faf9f6;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }

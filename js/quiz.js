@@ -75,6 +75,7 @@ function startQuiz(container, pool, mode, section, callbacks) {
 
     const input = document.getElementById("quiz-input");
     const submitBtn = document.getElementById("quiz-submit");
+    if (input) input.focus();
 
     function checkAnswer() {
       if (!input) return;
