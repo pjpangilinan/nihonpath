@@ -48,6 +48,10 @@ tailwind.config = {
 };
 </script>
 <link rel="stylesheet" href="css/style.css">
+<link rel="prefetch" href="index.html">
+<link rel="prefetch" href="katakana.html">
+<link rel="prefetch" href="combined.html">
+<link rel="prefetch" href="kanji.html">
 </head>
 <body class="text-on-surface antialiased min-h-screen flex flex-col washi-bg">
 <div id="sakura-container"></div>
@@ -60,11 +64,14 @@ tailwind.config = {
     <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="combined.html">Combined</a></li>
     <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="kanji.html">Kanji</a></li>
   </ul>
-  <button class="text-secondary hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-container-high"><span class="material-symbols-outlined">account_circle</span></button>
+  <button class="flex items-center gap-1.5 text-secondary hover:text-primary transition-colors px-3 py-1.5 rounded-full hover:bg-surface-container-high text-sm font-bold">
+    <span class="material-symbols-outlined text-[20px]">stadia_mercury</span>
+    <span id="nav-progress-pct" class="tabular-nums">0%</span>
+  </button>
 </nav>
-<main class="relative z-10 flex-grow pt-[80px] pb-[100px] md:pb-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex flex-col gap-stack-lg mt-stack-md">
+<main class="relative z-10 flex-grow pt-[96px] pb-[100px] md:pb-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex flex-col gap-stack-lg">
   <section class="text-center">
-    <h1 class="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-primary">Hiragana Study</h1>
+    <h1 class="text-[24px] font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-primary">Hiragana Study</h1>
     <p class="font-body-lg text-body-lg text-on-surface-variant mt-stack-sm">Select characters to focus on, listen to pronunciation, and test your knowledge.</p>
   </section>
   <section class="bg-surface-bright rounded-xl border border-outline-variant/30 p-gutter shadow-sm flex flex-col gap-stack-md">
@@ -91,23 +98,23 @@ tailwind.config = {
   <section id="quiz-container" class="hidden bg-surface-bright rounded-xl border border-outline-variant/30 p-gutter shadow-sm"></section>
 </main>
 <nav class="md:hidden bg-surface border-t border-outline-variant/20 shadow-sm fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-margin-mobile py-2 rounded-t-xl">
-  <a class="flex flex-col items-center justify-center text-secondary hover:bg-surface-container-high transition-all px-2 py-1 rounded-xl" href="index.html">
+  <a class="flex flex-col items-center justify-center text-secondary hover:bg-surface-container-high transition-all rounded-xl px-3 py-1" href="index.html">
     <span class="material-symbols-outlined text-[24px] mb-1">home</span>
     <span class="font-label-caps text-label-caps">Home</span>
   </a>
-  <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 scale-90 duration-200" href="hiragana.html">
+  <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1 duration-200" href="hiragana.html">
     <span class="material-symbols-outlined text-[24px] mb-1" style="font-variation-settings: 'FILL' 1;">language_japanese_kana</span>
     <span class="font-label-caps text-label-caps">Hiragana</span>
   </a>
-  <a class="flex flex-col items-center justify-center text-secondary hover:bg-surface-container-high transition-all px-2 py-1 rounded-xl" href="katakana.html">
+  <a class="flex flex-col items-center justify-center text-secondary hover:bg-surface-container-high transition-all rounded-xl px-3 py-1" href="katakana.html">
     <span class="material-symbols-outlined text-[24px] mb-1">menu_book</span>
     <span class="font-label-caps text-label-caps">Katakana</span>
   </a>
-  <a class="flex flex-col items-center justify-center text-secondary hover:bg-surface-container-high transition-all px-2 py-1 rounded-xl" href="combined.html">
+  <a class="flex flex-col items-center justify-center text-secondary hover:bg-surface-container-high transition-all rounded-xl px-3 py-1" href="combined.html">
     <span class="material-symbols-outlined text-[24px] mb-1">layers</span>
     <span class="font-label-caps text-label-caps">Combined</span>
   </a>
-  <a class="flex flex-col items-center justify-center text-secondary hover:bg-surface-container-high transition-all px-2 py-1 rounded-xl" href="kanji.html">
+  <a class="flex flex-col items-center justify-center text-secondary hover:bg-surface-container-high transition-all rounded-xl px-3 py-1" href="kanji.html">
     <span class="material-symbols-outlined text-[24px] mb-1">translate</span>
     <span class="font-label-caps text-label-caps">Kanji</span>
   </a>
@@ -172,7 +179,7 @@ startBtn.addEventListener("click", () => {
   startQuiz(quizContainer, pool, "romaji", "hiragana", {
     multiChar: true,
     onAnswer: (correct, total) => updateSakura(correct, total),
-    onComplete: (correct, total) => updateProgress("hiragana", correct, total),
+    onComplete: (correct, total) => updateProgress("hiragana", correct, correct),
     onBack: () => {
       quizContainer.classList.add("hidden");
       quizContainer.innerHTML = "";
@@ -194,6 +201,7 @@ function getChartCallbacks() {
 }
 
 initSakura("progressive");
+document.getElementById("nav-progress-pct").textContent = getOverallCoverage() + "%";
 </script>
 </body>
 </html>

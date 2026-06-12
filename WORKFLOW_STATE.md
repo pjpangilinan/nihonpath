@@ -80,6 +80,18 @@ Build NihonPath — fully static GitHub Pages Japanese learning site. Hiragana, 
 2. **Home top spacing** — `pt-[80px]` → `pt-[96px]` on index main for breathing room below nav.
 3. **Coverage progress** — Added `getCoverage(section, total)` to `progress.js`. Index dashboard now shows `attempted / total * 100` with 1 decimal (e.g. 36/71 = 50.7%). Bar fills proportionally.
 
+## Round 4 Fixes (2026-06-12)
+1. **Smaller chart boxes** — `aspect-square` → `aspect-[5/6]`, `gap-2` → `gap-1.5`, char `text-[24px]` → `text-[16px] sm:text-[20px] md:text-[28px]` in `js/chart.js`.
+2. **Smaller kanji boxes** — `aspect-square p-4` → `aspect-[4/5] p-2`, char `text-[40px]` → `text-[28px]`, grid `gap-gutter` → `gap-2` in `kanji.html`.
+3. **Mobile text** — h1 add `text-[24px]` before `font-display-lg-mobile` on all 5 pages for smaller screens.
+4. **Bottom nav alignment** — removed `scale-90`, unified all items `rounded-xl px-3 py-1` on all 5 pages. No more misalignment.
+5. **Row select button** — Added `checklist` icon button per group header in `js/chart.js`. Toggles row chars independently from header text click.
+6. **Prefetch nav** — Added `<link rel="prefetch">` for all other pages in `<head>` of all 5 HTML pages. Browser preloads during idle → near-instant swaps.
+7. **Progress = correct only** — Changed all `onComplete` callbacks from `updateProgress(section, correct, total)` → `updateProgress(section, correct, correct)`. Wrong answers no longer count as progress.
+8. **Nav progress display** — Replaced empty `account_circle` button with `stadia_mercury` icon + overall coverage % (e.g. "42.1%") in desktop nav on all 5 pages. Added `getOverallCoverage()` to `progress.js`. Also shows on mobile since bottom nav alignment fix makes nav consistent.
+9. **Top spacing** — Fixed `pt-[80px] mt-stack-md` → `pt-[96px]` (no mt) on all 4 quiz pages, matching index.
+10. **Summary accuracy** — quiz.js summary now uses `correctCount` for `attemptedCount` display (progress only tracks correct).
+
 ## UI Fixes (2026-06-12)
 1. **Nav bar cutoff** — removed `max-w-container-max mx-auto left-0 right-0` from all 5 nav bars. Now full-width with `px-6`.
 2. **Empty top space** — removed `mt-stack-md` from main + hero section on index.html. Content starts immediately below nav.

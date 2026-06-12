@@ -35,3 +35,17 @@ function getCoverage(section, total) {
   if (!s || s.attempted === 0 || total === 0) return "0.0";
   return ((s.attempted / total) * 100).toFixed(1);
 }
+
+function getOverallCoverage() {
+  const data = getProgress();
+  const totals = { hiragana: 71, katakana: 71, combined: 142, kanji: 100 };
+  let totalAttempted = 0;
+  let totalChars = 0;
+  for (const [k, total] of Object.entries(totals)) {
+    const s = data[k];
+    if (s) totalAttempted += s.attempted;
+    totalChars += total;
+  }
+  if (totalChars === 0) return "0.0";
+  return ((totalAttempted / totalChars) * 100).toFixed(1);
+}
