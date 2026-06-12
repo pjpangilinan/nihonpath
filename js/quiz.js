@@ -57,7 +57,7 @@ function startQuiz(container, pool, mode, section, callbacks) {
 
     const group = questions[current];
     const charsHtml = group.map(e =>
-      `<span class="inline-block font-japanese-character text-[80px] md:text-[100px] text-on-surface select-none">${e.char}</span>`
+      `<span class="inline-block font-japanese-character text-[48px] md:text-[64px] text-on-surface select-none">${e.char}</span>`
     ).join("");
     const acceptable = getAcceptableAnswers(group);
     containerEl.innerHTML = `

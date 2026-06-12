@@ -62,7 +62,7 @@ tailwind.config = {
   </ul>
   <button class="text-secondary hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-container-high"><span class="material-symbols-outlined">account_circle</span></button>
 </nav>
-<main class="relative z-10 flex-grow pt-[80px] pb-[100px] md:pb-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex flex-col gap-stack-lg">
+<main class="relative z-10 flex-grow pt-[96px] pb-[100px] md:pb-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex flex-col gap-stack-lg">
   <section class="text-center max-w-2xl mx-auto flex flex-col gap-stack-sm">
     <h1 class="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-primary">Master the Way of Japanese</h1>
     <p class="font-body-lg text-body-lg text-on-surface-variant">A free, static Japanese learning platform for Hiragana, Katakana, and JLPT N5 Kanji.</p>
@@ -125,6 +125,7 @@ tailwind.config = {
 <script>
 initSakura("decorative");
 function renderProgress() {
+  const totals = { hiragana: 71, katakana: 71, combined: 142, kanji: 100 };
   const sections = [
     { key: "hiragana", label: "Hiragana" },
     { key: "katakana", label: "Katakana" },
@@ -134,15 +135,15 @@ function renderProgress() {
   const container = document.getElementById("progress-dashboard");
   if (!container) return;
   container.innerHTML = sections.map(s => {
-    const acc = getAccuracy(s.key);
+    const cov = getCoverage(s.key, totals[s.key]);
     return `
       <div>
         <div class="flex justify-between items-center mb-unit">
           <span class="font-body-md text-body-md text-on-surface-variant font-medium">${s.label}</span>
-          <span class="font-label-caps text-label-caps text-primary">${acc}%</span>
+          <span class="font-label-caps text-label-caps text-primary">${cov}%</span>
         </div>
         <div class="h-[8px] bg-surface-container-highest rounded-full w-full overflow-hidden">
-          <div class="h-full bg-primary rounded-full transition-all duration-1000 ease-out" style="width: ${acc}%"></div>
+          <div class="h-full bg-primary rounded-full transition-all duration-1000 ease-out" style="width: ${Math.min(100, parseFloat(cov))}%"></div>
         </div>
       </div>
     `;

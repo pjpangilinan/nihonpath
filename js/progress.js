@@ -28,3 +28,10 @@ function getAccuracy(section) {
   if (!s || s.attempted === 0) return 0;
   return Math.round((s.correct / s.attempted) * 100);
 }
+
+function getCoverage(section, total) {
+  const data = getProgress();
+  const s = data[section];
+  if (!s || s.attempted === 0 || total === 0) return "0.0";
+  return ((s.attempted / total) * 100).toFixed(1);
+}

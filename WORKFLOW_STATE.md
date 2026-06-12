@@ -1,7 +1,7 @@
 # Workflow State
 
 ## Status
-UI fixes: nav full-width, reduced top space, smaller decorative chars. Quiz: multi-char mode, scroll fix.
+Char sizes reduced. Home top spacing added. Progress now shows coverage (attempted/total).
 
 ## Request
 Build NihonPath — fully static GitHub Pages Japanese learning site. Hiragana, Katakana, Combined, Kanji (JLPT N5). TTS via Web Speech API. Sakura blossom progression. localStorage lifetime stats.
@@ -74,6 +74,11 @@ Build NihonPath — fully static GitHub Pages Japanese learning site. Hiragana, 
 4. **Combined tab selection lost** `combined.html` — Tab switch re-rendered chart with empty selection. `updateCombinedSelection` now merges across tabs (preserves other tab's selections).
 5. **Combined Select All clears other tab** `combined.html` — Now preserves other tab's selections when selecting all visible.
 6. **Combined dead code** `combined.html` — Removed unused `hira` variable in `updatePoolCount`.
+
+## Round 3 Fixes (2026-06-12)
+1. **Smaller quiz chars** — `text-[80px] md:text-[100px]` → `text-[48px] md:text-[64px]` in `quiz.js`. Also shrunk chart grid chars (`text-[32px] md:text-[64px]` → `text-[24px] md:text-[40px]`) and kanji grid chars.
+2. **Home top spacing** — `pt-[80px]` → `pt-[96px]` on index main for breathing room below nav.
+3. **Coverage progress** — Added `getCoverage(section, total)` to `progress.js`. Index dashboard now shows `attempted / total * 100` with 1 decimal (e.g. 36/71 = 50.7%). Bar fills proportionally.
 
 ## UI Fixes (2026-06-12)
 1. **Nav bar cutoff** — removed `max-w-container-max mx-auto left-0 right-0` from all 5 nav bars. Now full-width with `px-6`.

@@ -37,7 +37,7 @@ function renderChart(container, dataset, groups, callbacks, initialSelection) {
       card.className = "char-card aspect-square bg-surface border border-outline-variant/50 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:shadow-md transition-all duration-200 relative group";
       card.innerHTML = `
         <div class="absolute top-1 right-1 w-2.5 h-2.5 rounded-full border border-outline-variant transition-colors"></div>
-        <span class="font-japanese-character text-[32px] md:text-japanese-character text-on-surface">${d.char}</span>
+        <span class="font-japanese-character text-[24px] md:text-[40px] text-on-surface">${d.char}</span>
         <span class="font-label-caps text-label-caps text-secondary absolute bottom-1 opacity-0 group-hover:opacity-100 transition-opacity">${d.romaji}</span>
       `;
       card.addEventListener("click", (e) => {
