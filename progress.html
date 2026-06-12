@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NihonPath — Katakana Study</title>
+<title>NihonPath — Your Progress</title>
 <link href="https://fonts.googleapis.com" rel="preconnect">
 <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
@@ -50,9 +50,9 @@ tailwind.config = {
 <link rel="stylesheet" href="css/style.css">
 <link rel="prefetch" href="index.html">
 <link rel="prefetch" href="hiragana.html">
+<link rel="prefetch" href="katakana.html">
 <link rel="prefetch" href="combined.html">
 <link rel="prefetch" href="kanji.html">
-<link rel="prefetch" href="progress.html">
 </head>
 <body class="text-on-surface antialiased min-h-screen flex flex-col washi-bg">
 <div id="sakura-container"></div>
@@ -61,7 +61,7 @@ tailwind.config = {
   <ul class="flex items-center gap-gutter">
     <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="index.html">Home</a></li>
     <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="hiragana.html">Hiragana</a></li>
-    <li><a class="block py-1 text-primary font-bold border-b-2 border-primary" href="katakana.html">Katakana</a></li>
+    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="katakana.html">Katakana</a></li>
     <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="combined.html">Combined</a></li>
     <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="kanji.html">Kanji</a></li>
   </ul>
@@ -71,31 +71,16 @@ tailwind.config = {
 </nav>
 <main class="relative z-10 flex-grow pt-[96px] pb-[100px] md:pb-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex flex-col gap-stack-lg">
   <section class="text-center">
-    <h1 class="text-[24px] font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-primary">Katakana Study</h1>
-    <p class="font-body-lg text-body-lg text-on-surface-variant mt-stack-sm">Master the angular shapes of Katakana, used for foreign words and emphasis.</p>
+    <h1 class="text-[24px] font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-primary">Your Progress</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant mt-stack-sm">Lifetime stats across all sections.</p>
   </section>
-  <section class="bg-surface-bright rounded-xl border border-outline-variant/30 p-gutter shadow-sm flex flex-col gap-stack-md">
-    <div class="flex flex-col md:flex-row justify-between items-center gap-stack-sm border-b border-outline-variant/20 pb-4">
-      <div class="flex items-center gap-2 text-primary font-headline-md text-headline-md">
-        <span class="material-symbols-outlined">select_check_box</span>
-        <span>Selected: <strong class="font-bold" id="selected-count">0</strong></span>
-      </div>
-      <div class="flex gap-4">
-        <button id="listen-btn" class="flex items-center gap-2 px-4 py-2 rounded-full border border-primary text-primary hover:bg-primary-container transition-colors">
-          <span class="material-symbols-outlined">volume_up</span> Listen Selection
-        </button>
-        <button id="start-quiz-btn" class="flex items-center gap-2 px-6 py-2 rounded-full bg-surface-variant text-on-surface-variant cursor-not-allowed transition-colors font-bold" disabled>
-          <span class="material-symbols-outlined">school</span> Start Quiz
-        </button>
-      </div>
+  <section class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-stack-md md:p-stack-lg shadow-sm">
+    <div class="text-center mb-stack-md pb-stack-md border-b border-outline-variant/20">
+      <span class="font-label-caps text-label-caps text-secondary">OVERALL COVERAGE</span>
+      <div class="font-display-lg text-display-lg text-primary font-bold mt-unit" id="overall-pct">0%</div>
     </div>
-    <div id="chart-container"></div>
-    <div class="flex items-center justify-center gap-4 mt-2">
-      <button id="select-all-btn" class="px-4 py-2 rounded-full border border-primary text-primary hover:bg-primary-container transition-colors text-sm font-medium">Select All</button>
-      <button id="clear-btn" class="px-4 py-2 rounded-full border border-outline-variant text-secondary hover:bg-surface-variant transition-colors text-sm font-medium">Clear</button>
-    </div>
+    <div class="flex flex-col gap-stack-md" id="progress-detail"></div>
   </section>
-  <section id="quiz-container" class="hidden bg-surface-bright rounded-xl border border-outline-variant/30 p-gutter shadow-sm"></section>
 </main>
 <nav class="md:hidden bg-surface border-t border-outline-variant/20 shadow-sm fixed bottom-0 left-0 w-full z-50 flex items-stretch rounded-t-xl">
   <a class="flex-1 flex flex-col items-center justify-center py-1.5 text-secondary hover:bg-surface-container-high transition-colors" href="index.html">
@@ -106,8 +91,8 @@ tailwind.config = {
     <span class="material-symbols-outlined text-[20px]">language_japanese_kana</span>
     <span class="font-bold text-[9px] tracking-normal">Hiragana</span>
   </a>
-  <a class="flex-1 flex flex-col items-center justify-center py-1.5 bg-primary-container text-on-primary-container" href="katakana.html">
-    <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+  <a class="flex-1 flex flex-col items-center justify-center py-1.5 text-secondary hover:bg-surface-container-high transition-colors" href="katakana.html">
+    <span class="material-symbols-outlined text-[20px]">menu_book</span>
     <span class="font-bold text-[9px] tracking-normal">Katakana</span>
   </a>
   <a class="flex-1 flex flex-col items-center justify-center py-1.5 text-secondary hover:bg-surface-container-high transition-colors" href="combined.html">
@@ -118,93 +103,46 @@ tailwind.config = {
     <span class="material-symbols-outlined text-[20px]">translate</span>
     <span class="font-bold text-[9px] tracking-normal">Kanji</span>
   </a>
-  <a class="flex-1 flex flex-col items-center justify-center py-1.5 text-secondary hover:bg-surface-container-high transition-colors" href="progress.html">
-    <span class="material-symbols-outlined text-[20px]">leaderboard</span>
+  <a class="flex-1 flex flex-col items-center justify-center py-1.5 bg-primary-container text-on-primary-container" href="progress.html">
+    <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
     <span class="font-bold text-[9px] tracking-normal">Progress</span>
   </a>
 </nav>
-<script src="js/data.js"></script>
-<script src="js/tts.js"></script>
 <script src="js/progress.js"></script>
-<script src="js/sakura.js"></script>
-<script src="js/chart.js"></script>
-<script src="js/quiz.js"></script>
 <script>
-let currentSelection = new Set();
-const chartContainer = document.getElementById("chart-container");
-const quizContainer = document.getElementById("quiz-container");
-const startBtn = document.getElementById("start-quiz-btn");
-const listenBtn = document.getElementById("listen-btn");
-const selectAllBtn = document.getElementById("select-all-btn");
-const clearBtn = document.getElementById("clear-btn");
-const countSpan = document.getElementById("selected-count");
-
-renderChart(chartContainer, katakanaData, katakanaGroups, {
-  onSelectionChange: (sel) => {
-    currentSelection = sel;
-    countSpan.textContent = sel.size;
-    if (sel.size > 0) {
-      startBtn.disabled = false;
-      startBtn.className = "flex items-center gap-2 px-6 py-2 rounded-full bg-primary text-on-primary cursor-pointer shadow-md transition-colors font-bold";
-    } else {
-      startBtn.disabled = true;
-      startBtn.className = "flex items-center gap-2 px-6 py-2 rounded-full bg-surface-variant text-on-surface-variant cursor-not-allowed transition-colors font-bold";
-    }
-  },
-  onCharClick: (char) => speak(char)
-});
-
-selectAllBtn.addEventListener("click", () => {
-  const all = katakanaData.map(d => d.char);
-  currentSelection = new Set(all);
-  countSpan.textContent = currentSelection.size;
-  renderChart(chartContainer, katakanaData, katakanaGroups, getChartCallbacks(), all);
-  startBtn.disabled = false;
-  startBtn.className = "flex items-center gap-2 px-6 py-2 rounded-full bg-primary text-on-primary cursor-pointer shadow-md transition-colors font-bold";
-});
-
-clearBtn.addEventListener("click", () => {
-  currentSelection = new Set();
-  countSpan.textContent = 0;
-  renderChart(chartContainer, katakanaData, katakanaGroups, getChartCallbacks(), []);
-  startBtn.disabled = true;
-  startBtn.className = "flex items-center gap-2 px-6 py-2 rounded-full bg-surface-variant text-on-surface-variant cursor-not-allowed transition-colors font-bold";
-});
-
-listenBtn.addEventListener("click", () => {
-  currentSelection.forEach(char => speak(char));
-});
-
-startBtn.addEventListener("click", () => {
-  const pool = katakanaData.filter(d => currentSelection.has(d.char));
-  if (pool.length === 0) return;
-  quizContainer.classList.remove("hidden");
-  requestAnimationFrame(() => quizContainer.scrollIntoView({ behavior: "smooth", block: "start" }));
-  startQuiz(quizContainer, pool, "romaji", "katakana", {
-    multiChar: true,
-    onAnswer: (correct, total) => updateSakura(correct, total),
-    onComplete: (correct, total) => updateProgress("katakana", correct, correct),
-    onBack: () => {
-      quizContainer.classList.add("hidden");
-      quizContainer.innerHTML = "";
-      document.querySelector("main").scrollIntoView({ behavior: "smooth" });
-    }
-  });
-});
-
-function getChartCallbacks() {
-  return {
-    onSelectionChange: (sel) => {
-      currentSelection = sel;
-      countSpan.textContent = sel.size;
-      startBtn.disabled = sel.size === 0;
-      startBtn.className = sel.size > 0 ? "flex items-center gap-2 px-6 py-2 rounded-full bg-primary text-on-primary cursor-pointer shadow-md transition-colors font-bold" : "flex items-center gap-2 px-6 py-2 rounded-full bg-surface-variant text-on-surface-variant cursor-not-allowed transition-colors font-bold";
-    },
-    onCharClick: (char) => speak(char)
-  };
+function renderProgressDetail() {
+  const totals = { hiragana: 71, katakana: 71, combined: 142, kanji: 100 };
+  const sections = [
+    { key: "hiragana", label: "Hiragana" },
+    { key: "katakana", label: "Katakana" },
+    { key: "combined", label: "Combined" },
+    { key: "kanji", label: "Kanji (N5)" }
+  ];
+  const container = document.getElementById("progress-detail");
+  if (!container) return;
+  const data = getProgress();
+  container.innerHTML = sections.map(s => {
+    const d = data[s.key] || { attempted: 0, correct: 0 };
+    const cov = getCoverage(s.key, totals[s.key]);
+    return `
+      <div>
+        <div class="flex justify-between items-center mb-1">
+          <span class="font-body-md text-body-md text-on-surface font-medium">${s.label}</span>
+          <span class="text-sm text-secondary">${d.correct} / ${d.attempted} correct</span>
+        </div>
+        <div class="flex justify-between items-center mb-unit">
+          <span class="font-label-caps text-label-caps text-secondary">${d.attempted} / ${totals[s.key]} chars explored</span>
+          <span class="font-label-caps text-label-caps text-primary">${cov}%</span>
+        </div>
+        <div class="h-[8px] bg-surface-container-highest rounded-full w-full overflow-hidden">
+          <div class="h-full bg-primary rounded-full transition-all duration-1000 ease-out" style="width: ${Math.min(100, parseFloat(cov))}%"></div>
+        </div>
+      </div>
+    `;
+  }).join("");
+  document.getElementById("overall-pct").textContent = getOverallCoverage() + "%";
 }
-
-initSakura("progressive");
+renderProgressDetail();
 </script>
 </body>
 </html>

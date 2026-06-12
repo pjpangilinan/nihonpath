@@ -80,6 +80,13 @@ Build NihonPath — fully static GitHub Pages Japanese learning site. Hiragana, 
 2. **Home top spacing** — `pt-[80px]` → `pt-[96px]` on index main for breathing room below nav.
 3. **Coverage progress** — Added `getCoverage(section, total)` to `progress.js`. Index dashboard now shows `attempted / total * 100` with 1 decimal (e.g. 36/71 = 50.7%). Bar fills proportionally.
 
+## Round 5 Fixes (2026-06-12)
+1. **Cards smaller** — `aspect-[5/6]`→`aspect-[2/3]`, `gap-1.5`→`gap-1`, `rounded-xl`→`rounded-lg`, chars `[16/20/28px]`→`[14/18/24px]`, dot `w-2.5→w-1.5`. Chart cards now 33% shorter.
+2. **Portrait restored** — desktop nav: `stadia_mercury`+% → `account_circle` link to `progress.html`. No text.
+3. **Progress page created** — `progress.html`. Shows overall coverage % + per-section bars + correct/attempted counts. Access via portrait (desktop) or Progress button in bottom nav (mobile).
+4. **Bottom nav rebuilt** — `flex-1` full-width columns (each = 1/6). No padding on parent. `py-1.5` vertical only. Icons `text-[20px]`, labels `font-bold text-[9px] tracking-normal` (no letter-spacing to prevent overflow). 6 items: Home, Hira, Kata, Combined, Kanji, Progress. Active = `bg-primary-container` fill. Inactive = `text-secondary hover:bg-surface-container-high`.
+5. **Prefetch progress.html** — added `<link rel="prefetch" href="progress.html">` to all 5 existing pages.
+
 ## Round 4 Fixes (2026-06-12)
 1. **Smaller chart boxes** — `aspect-square` → `aspect-[5/6]`, `gap-2` → `gap-1.5`, char `text-[24px]` → `text-[16px] sm:text-[20px] md:text-[28px]` in `js/chart.js`.
 2. **Smaller kanji boxes** — `aspect-square p-4` → `aspect-[4/5] p-2`, char `text-[40px]` → `text-[28px]`, grid `gap-gutter` → `gap-2` in `kanji.html`.
