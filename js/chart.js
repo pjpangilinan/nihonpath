@@ -9,13 +9,45 @@ function renderChart(container, dataset, groups, callbacks, initialSelection) {
   const vowelOrder = ["a", "i", "u", "e", "o"];
   const allCards = [];
 
-  const colHeadRow = document.createElement("div");
-  colHeadRow.className = "hidden md:grid grid-cols-6 gap-1 mb-2 items-start";
-  const colSpacer = document.createElement("div");
-  colHeadRow.appendChild(colSpacer);
+  function makeCard(d) {
+    const card = document.createElement("div");
+    card.className = "char-card aspect-[1/1] bg-surface border border-outline-variant/50 rounded-md flex flex-col items-center justify-center cursor-pointer hover:shadow-sm transition-all duration-200 relative group";
+    card.dataset.char = d.char;
+    card.innerHTML = `
+      <div class="absolute top-[1px] right-[1px] w-[2px] h-[2px] rounded-full border border-outline-variant transition-colors dot-indicator"></div>
+      <span class="font-japanese-character text-[24px] sm:text-[26px] md:text-[32px] text-on-surface">${d.char}</span>
+      <span class="font-label-caps text-label-caps text-secondary absolute bottom-[1px] opacity-0 group-hover:opacity-100 transition-opacity text-[5px] leading-none">${d.romaji}</span>
+    `;
+    card.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (selected.has(d.char)) selected.delete(d.char);
+      else selected.add(d.char);
+      updateCardVisual(card, selected.has(d.char));
+      if (callbacks && callbacks.onSelectionChange) callbacks.onSelectionChange(new Set(selected));
+      if (callbacks && callbacks.onCharClick) callbacks.onCharClick(d.char);
+    });
+    return card;
+  }
+
+  const desktopWrapper = document.createElement("div");
+  desktopWrapper.className = "hidden md:flex gap-[2px] items-start";
+
+  const desktopGrid = document.createElement("div");
+  desktopGrid.className = "flex-1 grid grid-cols-10 sm:grid-cols-12 md:grid-cols-14 lg:grid-cols-16 gap-[2px]";
+  desktopGrid.style.direction = "rtl";
+  dataset.forEach(d => {
+    const card = makeCard(d);
+    card.style.direction = "ltr";
+    desktopGrid.appendChild(card);
+    allCards.push(card);
+  });
+  desktopWrapper.appendChild(desktopGrid);
+
+  const vowelCol = document.createElement("div");
+  vowelCol.className = "flex flex-col gap-[2px] shrink-0";
   vowelOrder.forEach(v => {
     const btn = document.createElement("button");
-    btn.className = "font-label-caps text-label-caps text-secondary text-center py-1.5 rounded-lg bg-surface border border-outline-variant/30 hover:bg-primary-container/20 transition-colors cursor-pointer w-full";
+    btn.className = "font-label-caps text-label-caps text-secondary aspect-[1/1] w-10 flex items-center justify-center rounded-md bg-surface border border-outline-variant/30 hover:bg-primary-container/20 transition-colors cursor-pointer text-[16px]";
     btn.textContent = v.toUpperCase();
     btn.addEventListener("click", () => {
       const vowelChars = dataset.filter(d => getVowelEnding(d.romaji) === v);
@@ -27,21 +59,23 @@ function renderChart(container, dataset, groups, callbacks, initialSelection) {
       renderAllCards();
       if (callbacks && callbacks.onSelectionChange) callbacks.onSelectionChange(new Set(selected));
     });
-    colHeadRow.appendChild(btn);
+    vowelCol.appendChild(btn);
   });
-  containerEl.appendChild(colHeadRow);
+  desktopWrapper.appendChild(vowelCol);
+
+  containerEl.appendChild(desktopWrapper);
 
   groups.forEach(group => {
     const chars = dataset.filter(d => d.group === group.key);
     if (chars.length === 0) return;
 
     const section = document.createElement("div");
-    section.className = "mb-2";
+    section.className = "mb-1";
 
     const header = document.createElement("div");
-    header.className = "group-header flex items-center gap-1 mb-1 cursor-pointer select-none px-0.5 md:hidden";
-    header.innerHTML = `<span class="font-label-caps text-label-caps text-secondary">${group.label}</span><span class="h-px flex-1 bg-outline-variant/30"></span><button class="row-select-btn flex items-center justify-center w-5 h-5 rounded-full text-secondary hover:text-primary hover:bg-surface-container-high transition-colors" title="Toggle row"><span class="material-symbols-outlined text-[14px]">checklist</span></button>`;
-    const headerRowToggle = () => {
+    header.className = "group-header flex items-center gap-1 mb-[2px] cursor-pointer select-none px-0.5 md:hidden";
+    header.innerHTML = `<span class="font-label-caps text-label-caps text-secondary">${group.label}</span><span class="h-px flex-1 bg-outline-variant/30"></span><button class="row-select-btn flex items-center justify-center w-4 h-4 rounded-full text-secondary hover:text-primary hover:bg-surface-container-high transition-colors" title="Toggle row"><span class="material-symbols-outlined text-[11px]">checklist</span></button>`;
+    const toggleRow = () => {
       const allSel = chars.every(d => selected.has(d.char));
       chars.forEach(d => {
         if (allSel) selected.delete(d.char);
@@ -52,41 +86,16 @@ function renderChart(container, dataset, groups, callbacks, initialSelection) {
     };
     header.addEventListener("click", (e) => {
       if (e.target.closest(".row-select-btn")) return;
-      headerRowToggle();
+      toggleRow();
     });
     header.querySelector(".row-select-btn").addEventListener("click", (e) => {
       e.stopPropagation();
-      headerRowToggle();
+      toggleRow();
     });
     section.appendChild(header);
 
-    const gridsWrapper = document.createElement("div");
-
     const mobileGrid = document.createElement("div");
-    mobileGrid.className = "grid grid-cols-5 gap-1 md:hidden";
-
-    const desktopGrid = document.createElement("div");
-    desktopGrid.className = "hidden md:grid grid-cols-6 gap-1 items-start";
-
-    function makeCard(d) {
-      const card = document.createElement("div");
-      card.className = "char-card aspect-[3/4] bg-surface border border-outline-variant/50 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:shadow-sm transition-all duration-200 relative group";
-      card.dataset.char = d.char;
-      card.innerHTML = `
-        <div class="absolute top-[2px] right-[2px] w-[3px] h-[3px] rounded-full border border-outline-variant transition-colors dot-indicator"></div>
-        <span class="font-japanese-character text-[12px] sm:text-[14px] md:text-[18px] text-on-surface">${d.char}</span>
-        <span class="font-label-caps text-label-caps text-secondary absolute bottom-0.5 opacity-0 group-hover:opacity-100 transition-opacity text-[7px] leading-none">${d.romaji}</span>
-      `;
-      card.addEventListener("click", (e) => {
-        e.stopPropagation();
-        if (selected.has(d.char)) selected.delete(d.char);
-        else selected.add(d.char);
-        updateCardVisual(card, selected.has(d.char));
-        if (callbacks && callbacks.onSelectionChange) callbacks.onSelectionChange(new Set(selected));
-        if (callbacks && callbacks.onCharClick) callbacks.onCharClick(d.char);
-      });
-      return card;
-    }
+    mobileGrid.className = "grid grid-cols-5 gap-[2px] md:hidden";
 
     chars.forEach(d => {
       const card = makeCard(d);
@@ -94,63 +103,7 @@ function renderChart(container, dataset, groups, callbacks, initialSelection) {
       allCards.push(card);
     });
 
-    const buckets = { a: [], i: [], u: [], e: [], o: [] };
-    chars.forEach(d => {
-      const v = getVowelEnding(d.romaji);
-      if (v && buckets[v]) buckets[v].push(d);
-    });
-
-    const maxRows = Math.max(...vowelOrder.map(v => (buckets[v] || []).length), 0);
-
-    for (let r = 0; r < maxRows; r++) {
-      const labelCell = document.createElement("div");
-      if (r === 0) {
-        labelCell.className = "flex flex-col items-center justify-center gap-0.5 cursor-pointer select-none py-1";
-        const btn = document.createElement("button");
-        btn.className = "flex items-center justify-center w-5 h-5 rounded-full text-secondary hover:text-primary hover:bg-surface-container-high transition-colors";
-        btn.innerHTML = '<span class="material-symbols-outlined text-[14px]">checklist</span>';
-        const label = document.createElement("span");
-        label.className = "font-label-caps text-label-caps text-secondary text-center";
-        label.textContent = group.label;
-        labelCell.appendChild(btn);
-        labelCell.appendChild(label);
-        const desktopRowToggle = () => {
-          const allSel = chars.every(d => selected.has(d.char));
-          chars.forEach(d => {
-            if (allSel) selected.delete(d.char);
-            else selected.add(d.char);
-          });
-          renderAllCards();
-          if (callbacks && callbacks.onSelectionChange) callbacks.onSelectionChange(new Set(selected));
-        };
-        labelCell.addEventListener("click", (e) => {
-          if (e.target.closest("button")) return;
-          desktopRowToggle();
-        });
-        btn.addEventListener("click", (e) => {
-          e.stopPropagation();
-          desktopRowToggle();
-        });
-      }
-      desktopGrid.appendChild(labelCell);
-
-      vowelOrder.forEach(v => {
-        const d = (buckets[v] || [])[r];
-        if (d) {
-          const card = makeCard(d);
-          desktopGrid.appendChild(card);
-          allCards.push(card);
-        } else {
-          const empty = document.createElement("div");
-          empty.className = "aspect-[3/4]";
-          desktopGrid.appendChild(empty);
-        }
-      });
-    }
-
-    gridsWrapper.appendChild(mobileGrid);
-    gridsWrapper.appendChild(desktopGrid);
-    section.appendChild(gridsWrapper);
+    section.appendChild(mobileGrid);
     containerEl.appendChild(section);
   });
 

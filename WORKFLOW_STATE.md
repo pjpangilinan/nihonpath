@@ -131,16 +131,16 @@ python3 -m http.server 8080
 ## Lint Results
 —
 
-## Vowel-Column Desktop Layout (2026-06-12)
+## Round 8 Changes (2026-06-12)
+1. **Desktop: dense flat grid** — 16-column grid (`grid-cols-10 sm:12 md:14 lg:16`), `aspect-[1/1]` cards, `gap-[2px]`. Cards ~50-78px square. No row-select/labels on desktop.
+2. **Vowel buttons vertical on right** — A/I/U/E/O stacked vertically right of grid (`flex flex-col shrink-0`). `w-10 aspect-[1/1]`, `text-[16px]`.
+3. **RTL fill** — `direction: rtl` on desktop grid. Progresses right-to-left like Japanese. Each card `direction: ltr` for normal text.
+4. **Bigger char font** — `text-[10/11/13px]` → `text-[24/26/32px]`. Box stays same size (`aspect-[1/1]`), character fills more space.
+5. **Combined tabs full-width** — `flex-1` on tab buttons, equal width split.
+6. **Progress reset full-width** — `w-full md:w-auto` on reset button.
 
-## Round 7 Changes (2026-06-12)
-1. **Desktop gojuon table** — `renderChart` now renders full gojuon table on desktop (`md:`): consonant row labels (clickable for row-select) on left, vowel column header buttons (A I U E O — clickable for column-select across ALL groups) at top. Chars bucketed by vowel ending per group. Columns ordered A I U E O left-to-right.
-2. **Column-select buttons** — Row of 5 vowel buttons above all groups, hidden on mobile (`hidden md:grid`). Clicking toggles all dataset chars ending with that vowel.
-3. **Row-select (desktop)** — Each consonant group row has a clickable label area + checklist icon button, same toggle behavior as mobile header.
-4. **Char-cards smaller** — `aspect-[2/3]` → `aspect-[3/4]`, char font `[14/18/24px]` → `[12/14/18px]`, dot `w-[4px]` → `w-[3px] h-[3px]`, romaji label `text-[8px]` → `text-[7px]`.
-5. **Kanji mobile grid 5x5** — `grid-cols-2 sm:grid-cols-3` → `grid-cols-5 sm:grid-cols-5 md:grid-cols-4 lg:grid-cols-6`. Gap `gap-2` → `gap-1`. Cards `aspect-[4/5]` → `aspect-[1/1]` (square), char `text-[28px]` → `text-[20px]`, padding `p-2` → `p-1`.
-6. **Progress reset button** — Red "Reset Progress" button in progress.html footer. `onclick="localStorage.removeItem('nihonpath_progress');location.reload()"`.
-7. **Full-width buttons** — All action buttons (listen, start quiz, select all, clear, reshuffle, mode toggle) now `flex-1` on mobile (fill column), `md:flex-none` on desktop (natural width). Applied to hiragana.html, katakana.html, combined.html, kanji.html.
+## Commit Message Draft
+`feat: vertical vowel buttons rt-gr, rtl grid, bigger char font, dense desktop`
 
 ## Commit Message Draft
 `feat: gojuon table layout, kanji 5x5 mobile, smaller cards, full-width buttons, reset progress`
