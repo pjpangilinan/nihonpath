@@ -3,7 +3,17 @@ function startQuiz(container, pool, mode, section, callbacks) {
   if (typeof container === "string") containerEl = document.getElementById(container);
   if (!containerEl || pool.length === 0) return;
 
-  const questions = shuffleArray([...pool]);
+  const multiChar = callbacks && callbacks.multiChar;
+  let questions;
+  if (multiChar && pool.length > 1) {
+    questions = [];
+    const shuffled = shuffleArray([...pool]);
+    for (let i = 0; i < shuffled.length - 1; i += 2) {
+      questions.push([shuffled[i], shuffled[i + 1]]);
+    }
+  } else {
+    questions = shuffleArray([...pool]).map(q => [q]);
+  }
   let current = 0;
   let correctCount = 0;
   let attemptedCount = 0;
@@ -11,17 +21,49 @@ function startQuiz(container, pool, mode, section, callbacks) {
   containerEl.innerHTML = "";
   renderQuestion();
 
+  function getAcceptableAnswers(group) {
+    if (mode === "meaning") {
+      const m = group.map(e =>
+        e.meaning.toLowerCase().split("/").map(s => s.trim()).filter(Boolean)
+      );
+      return combineAnswers(m);
+    }
+    const r = group.map(e => {
+      let readings = e.romaji.toLowerCase().split("/").map(s => s.trim()).filter(Boolean);
+      readings = readings.flatMap(s => s.split(",").map(t => t.trim()));
+      return readings;
+    });
+    return combineAnswers(r);
+  }
+
+  function combineAnswers(lists) {
+    return lists.reduce((acc, list) => {
+      if (acc.length === 0) return list;
+      const result = [];
+      for (const a of acc) {
+        for (const b of list) {
+          result.push(a + b);
+        }
+      }
+      return result;
+    }, []);
+  }
+
   function renderQuestion() {
     if (current >= questions.length) {
       renderSummary();
       return;
     }
 
-    const entry = questions[current];
+    const group = questions[current];
+    const charsHtml = group.map(e =>
+      `<span class="inline-block font-japanese-character text-[80px] md:text-[100px] text-on-surface select-none">${e.char}</span>`
+    ).join("");
+    const acceptable = getAcceptableAnswers(group);
     containerEl.innerHTML = `
       <div class="text-center py-6">
         <div class="text-sm text-secondary mb-2">${current + 1} / ${questions.length}</div>
-        <div class="font-japanese-character text-[80px] md:text-[100px] text-on-surface mb-6 select-none">${entry.char}</div>
+        <div class="flex items-center justify-center gap-4 mb-6">${charsHtml}</div>
         ${mode === "meaning" ? '<div class="font-body-lg text-body-lg text-secondary mb-4">Type the English meaning:</div>' : '<div class="font-body-lg text-body-lg text-secondary mb-4">Type the romaji reading:</div>'}
         <div class="flex items-center justify-center gap-3 max-w-md mx-auto">
           <input type="text" id="quiz-input" class="flex-1 px-4 py-3 rounded-xl bg-surface-bright border border-outline-variant text-on-surface text-center text-lg font-body-md outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all" placeholder="Your answer..." autofocus>
@@ -42,14 +84,6 @@ function startQuiz(container, pool, mode, section, callbacks) {
       input.disabled = true;
       submitBtn.disabled = true;
       attemptedCount++;
-
-      let acceptable;
-      if (mode === "meaning") {
-        acceptable = entry.meaning.toLowerCase().split("/").map(s => s.trim()).filter(Boolean);
-      } else {
-        acceptable = entry.romaji.toLowerCase().split("/").map(s => s.trim()).filter(Boolean);
-        acceptable = acceptable.flatMap(s => s.split(",").map(t => t.trim()));
-      }
 
       const correct = acceptable.some(a => a === answer);
       if (correct) correctCount++;

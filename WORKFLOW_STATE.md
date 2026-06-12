@@ -1,7 +1,7 @@
 # Workflow State
 
 ## Status
-Bug fixes applied. Duplicate kanji removed, missing script added, chart visual state fixed, combined tab selection preserved. Ready to test / deploy.
+UI fixes: nav full-width, reduced top space, smaller decorative chars. Quiz: multi-char mode, scroll fix.
 
 ## Request
 Build NihonPath — fully static GitHub Pages Japanese learning site. Hiragana, Katakana, Combined, Kanji (JLPT N5). TTS via Web Speech API. Sakura blossom progression. localStorage lifetime stats.
@@ -75,8 +75,15 @@ Build NihonPath — fully static GitHub Pages Japanese learning site. Hiragana, 
 5. **Combined Select All clears other tab** `combined.html` — Now preserves other tab's selections when selecting all visible.
 6. **Combined dead code** `combined.html` — Removed unused `hira` variable in `updatePoolCount`.
 
+## UI Fixes (2026-06-12)
+1. **Nav bar cutoff** — removed `max-w-container-max mx-auto left-0 right-0` from all 5 nav bars. Now full-width with `px-6`.
+2. **Empty top space** — removed `mt-stack-md` from main + hero section on index.html. Content starts immediately below nav.
+3. **Oversized symbols** — index card decorative chars `text-[120px]` → `text-[64px]`. Less scroll required.
+4. **Multi-char quiz** — `quiz.js` now supports `multiChar` mode. Pairs 2 chars per question, combines readings (e.g. あ+か → "aka"). Enabled on all quiz pages. Kanji uses multiChar only for romaji mode.
+5. **Quiz scroll fix** — `scrollIntoView` fires inside `requestAnimationFrame` after removing `hidden` class, so element has layout before scroll targets it.
+
 ## Review Findings
-Bugs fixed via static analysis (Chrome unavailable in this environment). All JS files pass `node --check` syntax validation.
+All fixes verified via static analysis. JS files pass `node --check`.
 
 ## Test Commands
 ```
