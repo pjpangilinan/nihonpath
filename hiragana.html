@@ -80,19 +80,19 @@ tailwind.config = {
         <span class="material-symbols-outlined">select_check_box</span>
         <span>Selected: <strong class="font-bold" id="selected-count">0</strong></span>
       </div>
-      <div class="flex gap-4">
-        <button id="listen-btn" class="flex items-center gap-2 px-4 py-2 rounded-full border border-primary text-primary hover:bg-primary-container transition-colors">
+      <div class="flex w-full md:w-auto gap-4">
+        <button id="listen-btn" class="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-full border border-primary text-primary hover:bg-primary-container transition-colors">
           <span class="material-symbols-outlined">volume_up</span> Listen Selection
         </button>
-        <button id="start-quiz-btn" class="flex items-center gap-2 px-6 py-2 rounded-full bg-surface-variant text-on-surface-variant cursor-not-allowed transition-colors font-bold" disabled>
+        <button id="start-quiz-btn" class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-2 rounded-full bg-surface-variant text-on-surface-variant cursor-not-allowed transition-colors font-bold" disabled>
           <span class="material-symbols-outlined">school</span> Start Quiz
         </button>
       </div>
     </div>
     <div id="chart-container"></div>
-    <div class="flex items-center justify-center gap-4 mt-2">
-      <button id="select-all-btn" class="px-4 py-2 rounded-full border border-primary text-primary hover:bg-primary-container transition-colors text-sm font-medium">Select All</button>
-      <button id="clear-btn" class="px-4 py-2 rounded-full border border-outline-variant text-secondary hover:bg-surface-variant transition-colors text-sm font-medium">Clear</button>
+    <div class="flex items-center justify-center gap-4 mt-2 w-full">
+      <button id="select-all-btn" class="flex-1 md:flex-none px-4 py-2 rounded-full border border-primary text-primary hover:bg-primary-container transition-colors text-sm font-medium">Select All</button>
+      <button id="clear-btn" class="flex-1 md:flex-none px-4 py-2 rounded-full border border-outline-variant text-secondary hover:bg-surface-variant transition-colors text-sm font-medium">Clear</button>
     </div>
   </section>
   <section id="quiz-container" class="hidden bg-surface-bright rounded-xl border border-outline-variant/30 p-gutter shadow-sm"></section>

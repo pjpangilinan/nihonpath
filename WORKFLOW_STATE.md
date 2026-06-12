@@ -131,5 +131,16 @@ python3 -m http.server 8080
 ## Lint Results
 —
 
+## Vowel-Column Desktop Layout (2026-06-12)
+
+## Round 7 Changes (2026-06-12)
+1. **Desktop gojuon table** — `renderChart` now renders full gojuon table on desktop (`md:`): consonant row labels (clickable for row-select) on left, vowel column header buttons (A I U E O — clickable for column-select across ALL groups) at top. Chars bucketed by vowel ending per group. Columns ordered A I U E O left-to-right.
+2. **Column-select buttons** — Row of 5 vowel buttons above all groups, hidden on mobile (`hidden md:grid`). Clicking toggles all dataset chars ending with that vowel.
+3. **Row-select (desktop)** — Each consonant group row has a clickable label area + checklist icon button, same toggle behavior as mobile header.
+4. **Char-cards smaller** — `aspect-[2/3]` → `aspect-[3/4]`, char font `[14/18/24px]` → `[12/14/18px]`, dot `w-[4px]` → `w-[3px] h-[3px]`, romaji label `text-[8px]` → `text-[7px]`.
+5. **Kanji mobile grid 5x5** — `grid-cols-2 sm:grid-cols-3` → `grid-cols-5 sm:grid-cols-5 md:grid-cols-4 lg:grid-cols-6`. Gap `gap-2` → `gap-1`. Cards `aspect-[4/5]` → `aspect-[1/1]` (square), char `text-[28px]` → `text-[20px]`, padding `p-2` → `p-1`.
+6. **Progress reset button** — Red "Reset Progress" button in progress.html footer. `onclick="localStorage.removeItem('nihonpath_progress');location.reload()"`.
+7. **Full-width buttons** — All action buttons (listen, start quiz, select all, clear, reshuffle, mode toggle) now `flex-1` on mobile (fill column), `md:flex-none` on desktop (natural width). Applied to hiragana.html, katakana.html, combined.html, kanji.html.
+
 ## Commit Message Draft
-`feat: scaffold nihonpath — tailwind + vanilla js japanese learning site`
+`feat: gojuon table layout, kanji 5x5 mobile, smaller cards, full-width buttons, reset progress`
