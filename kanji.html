@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NihonPath — Kanji Explorer</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "outline-variant": "#d2c3c6", "surface-bright": "#faf9f6",
+        "on-primary-fixed-variant": "#5a4048", "on-primary-fixed": "#2a151c",
+        "on-primary": "#ffffff", "secondary-fixed-dim": "#c8c6c6",
+        "primary-container": "#ffd9e3", "tertiary": "#556158",
+        "primary-fixed-dim": "#e1bdc7", "secondary": "#5f5e5e",
+        "surface-container": "#efeeeb", "on-tertiary-fixed-variant": "#3e4a41",
+        "on-surface-variant": "#4e4447", "surface-container-highest": "#e3e2e0",
+        "on-secondary-fixed-variant": "#474747", "error-container": "#ffdad6",
+        "on-tertiary-fixed": "#131e17", "on-tertiary": "#ffffff",
+        "on-secondary": "#ffffff", "on-error-container": "#93000a",
+        "on-error": "#ffffff", "background": "#faf9f6",
+        "inverse-surface": "#2f312f", "surface-container-lowest": "#ffffff",
+        "surface-dim": "#dbdad7", "tertiary-fixed": "#d9e6da",
+        "on-primary-container": "#7a5d65", "on-tertiary-container": "#5b675e",
+        "on-secondary-fixed": "#1b1c1c", "outline": "#807477",
+        "tertiary-fixed-dim": "#bdcabe", "secondary-container": "#e4e2e1",
+        "inverse-primary": "#e1bdc7", "surface-container-high": "#e9e8e5",
+        "surface": "#faf9f6", "error": "#ba1a1a", "on-background": "#1a1c1a",
+        "tertiary-container": "#d9e6da", "on-surface": "#1a1c1a",
+        "surface-container-low": "#f4f3f1", "inverse-on-surface": "#f2f1ee",
+        "primary-fixed": "#ffd9e3", "surface-tint": "#73575f",
+        "surface-variant": "#e3e2e0", "on-secondary-container": "#656464",
+        "secondary-fixed": "#e4e2e1", "primary": "#73575f"
+      },
+      borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+      spacing: { unit: "8px", gutter: "24px", "stack-sm": "12px", "margin-desktop": "40px", "stack-lg": "48px", "margin-mobile": "16px", "stack-md": "24px", "container-max": "1120px" },
+      fontFamily: { "body-lg": ["Noto Sans"], "japanese-character": ["Noto Sans JP"], "body-md": ["Noto Sans"], "display-lg-mobile": ["Plus Jakarta Sans"], "display-lg": ["Plus Jakarta Sans"], "label-caps": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"] },
+      fontSize: { "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }], "japanese-character": ["64px", { lineHeight: "1.2", fontWeight: "500" }], "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }], "display-lg-mobile": ["32px", { lineHeight: "40px", fontWeight: "700" }], "display-lg": ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "700" }], "label-caps": ["12px", { lineHeight: "16px", letterSpacing: "0.08em", fontWeight: "700" }], "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }] }
+    }
+  }
+};
+</script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="text-on-surface antialiased min-h-screen flex flex-col washi-bg">
+<div id="sakura-container"></div>
+<nav class="hidden md:flex bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 fixed top-0 w-full z-50 justify-between items-center px-gutter py-4 max-w-container-max mx-auto left-0 right-0">
+  <div class="font-headline-md text-headline-md font-bold text-primary">NihonPath</div>
+  <ul class="flex items-center gap-gutter">
+    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="index.html">Home</a></li>
+    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="hiragana.html">Hiragana</a></li>
+    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="katakana.html">Katakana</a></li>
+    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="combined.html">Combined</a></li>
+    <li><a class="block py-1 text-primary font-bold border-b-2 border-primary" href="kanji.html">Kanji</a></li>
+  </ul>
+  <button class="text-secondary hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-container-high"><span class="material-symbols-outlined">account_circle</span></button>
+</nav>
+<main class="relative z-10 flex-grow pt-[80px] pb-[100px] md:pb-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex flex-col gap-stack-lg mt-stack-md">
+  <section class="mb-0 text-center md:text-left">
+    <h1 class="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-primary">Kanji Explorer</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant">Master the foundations of JLPT N5. Select characters to build your custom quiz.</p>
+  </section>
+  <section class="bg-surface-container-low rounded-xl p-stack-md shadow-sm border border-outline-variant/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-stack-md">
+    <div class="flex flex-wrap gap-stack-sm w-full md:w-auto">
+      <button id="reshuffle-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-bright border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-colors w-full md:w-auto justify-center">
+        <span class="material-symbols-outlined text-[20px]">shuffle</span>
+        <span class="font-body-md font-medium">Reshuffle Grid</span>
+      </button>
+      <button id="select-all-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-bright border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-colors w-full md:w-auto justify-center">
+        <span class="material-symbols-outlined text-[20px]">checklist</span>
+        <span class="font-body-md font-medium">Select All Visible</span>
+      </button>
+    </div>
+    <div class="flex flex-col md:flex-row items-center gap-stack-sm w-full md:w-auto">
+      <div class="flex bg-surface-container-high rounded-lg p-1 w-full md:w-auto">
+        <button id="mode-romaji" class="flex-1 md:flex-none px-4 py-2 rounded-md bg-surface-bright shadow-sm text-on-surface font-body-md font-medium transition-all">Test Romaji</button>
+        <button id="mode-meaning" class="flex-1 md:flex-none px-4 py-2 rounded-md text-on-surface-variant hover:text-on-surface font-body-md font-medium transition-all">Test Meaning</button>
+      </div>
+      <button id="start-quiz-btn" class="w-full md:w-auto px-6 py-2 rounded-lg bg-primary text-on-primary font-body-md font-medium shadow-sm hover:shadow-md hover:bg-surface-tint transition-all flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined text-[20px]">play_arrow</span> Start Quiz
+      </button>
+    </div>
+  </section>
+  <section class="flex items-center gap-2 text-primary font-headline-md text-headline-md px-1">
+    <span class="material-symbols-outlined">select_check_box</span>
+    <span>Selected: <strong class="font-bold" id="selected-count">0</strong></span>
+  </section>
+  <section class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-gutter" id="kanji-grid"></section>
+  <section id="quiz-container" class="hidden bg-surface-bright rounded-xl border border-outline-variant/30 p-gutter shadow-sm"></section>
+</main>
+<nav class="md:hidden bg-surface border-t border-outline-variant/20 shadow-sm fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-margin-mobile py-2 rounded-t-xl">
+  <a class="flex flex-col items-center justify-center text-secondary hover:bg-surface-container-high transition-all px-2 py-1 rounded-xl" href="index.html">
+    <span class="material-symbols-outlined text-[24px] mb-1">home</span>
+    <span class="font-label-caps text-label-caps">Home</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-secondary hover:bg-surface-container-high transition-all px-2 py-1 rounded-xl" href="hiragana.html">
+    <span class="material-symbols-outlined text-[24px] mb-1">language_japanese_kana</span>
+    <span class="font-label-caps text-label-caps">Hiragana</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-secondary hover:bg-surface-container-high transition-all px-2 py-1 rounded-xl" href="katakana.html">
+    <span class="material-symbols-outlined text-[24px] mb-1">menu_book</span>
+    <span class="font-label-caps text-label-caps">Katakana</span>
+  </a>
+  <a class="flex flex-col items-center justify-center text-secondary hover:bg-surface-container-high transition-all px-2 py-1 rounded-xl" href="combined.html">
+    <span class="material-symbols-outlined text-[24px] mb-1">layers</span>
+    <span class="font-label-caps text-label-caps">Combined</span>
+  </a>
+  <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 scale-90 duration-200" href="kanji.html">
+    <span class="material-symbols-outlined text-[24px] mb-1" style="font-variation-settings: 'FILL' 1;">translate</span>
+    <span class="font-label-caps text-label-caps">Kanji</span>
+  </a>
+</nav>
+<script src="js/data.js"></script>
+<script src="js/tts.js"></script>
+<script src="js/progress.js"></script>
+<script src="js/sakura.js"></script>
+<script src="js/quiz.js"></script>
+<script>
+const VISIBLE_COUNT = 24;
+let currentDisplay = [];
+let selectedKanji = new Set();
+let quizMode = "romaji";
+
+const grid = document.getElementById("kanji-grid");
+const quizContainer = document.getElementById("quiz-container");
+const countSpan = document.getElementById("selected-count");
+const startBtn = document.getElementById("start-quiz-btn");
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function renderKanjiGrid() {
+  currentDisplay = shuffle([...kanjiData]).slice(0, VISIBLE_COUNT);
+  selectedKanji = new Set();
+  countSpan.textContent = 0;
+  grid.innerHTML = "";
+
+  currentDisplay.forEach(d => {
+    const card = document.createElement("div");
+    card.className = "kanji-card relative group cursor-pointer bg-surface-bright border border-primary-fixed-dim rounded-xl p-4 flex flex-col items-center justify-center aspect-square transition-all duration-300 hover:shadow-lg hover:-translate-y-1";
+    card.innerHTML = `
+      <div class="selection-indicator absolute top-2 left-2 w-5 h-5 rounded-full border-2 border-outline-variant flex items-center justify-center transition-colors">
+        <span class="material-symbols-outlined text-[14px] text-surface-bright opacity-0">check</span>
+      </div>
+      <div class="font-japanese-character text-japanese-character text-on-surface mb-2 mt-4 select-none">${d.char}</div>
+      <div class="w-full mt-auto opacity-0 group-hover:opacity-100 transition-opacity text-center flex flex-col items-center bg-surface-container-low p-2 rounded-md absolute bottom-2 left-2 right-2 w-[calc(100%-16px)]">
+        <span class="font-label-caps text-label-caps text-primary mb-1">${d.romaji}</span>
+        <span class="font-body-md text-[12px] text-on-surface-variant truncate w-full">${d.meaning}</span>
+      </div>
+    `;
+    card.addEventListener("click", () => {
+      if (selectedKanji.has(d.char)) {
+        selectedKanji.delete(d.char);
+        deselectCard(card);
+      } else {
+        selectedKanji.add(d.char);
+        selectCard(card);
+      }
+      countSpan.textContent = selectedKanji.size;
+      speak(d.char);
+    });
+    grid.appendChild(card);
+  });
+}
+
+function selectCard(card) {
+  card.classList.add("ring-2", "ring-primary", "bg-primary-container/20");
+  const indicator = card.querySelector(".selection-indicator");
+  if (indicator) {
+    indicator.classList.remove("border-outline-variant");
+    indicator.classList.add("bg-primary", "border-primary");
+    indicator.querySelector("span").classList.remove("opacity-0");
+  }
+}
+
+function deselectCard(card) {
+  card.classList.remove("ring-2", "ring-primary", "bg-primary-container/20");
+  const indicator = card.querySelector(".selection-indicator");
+  if (indicator) {
+    indicator.classList.add("border-outline-variant");
+    indicator.classList.remove("bg-primary", "border-primary");
+    indicator.querySelector("span").classList.add("opacity-0");
+  }
+}
+
+document.getElementById("reshuffle-btn").addEventListener("click", renderKanjiGrid);
+
+document.getElementById("select-all-btn").addEventListener("click", () => {
+  const allSelected = selectedKanji.size === currentDisplay.length;
+  if (allSelected) {
+    selectedKanji.clear();
+    document.querySelectorAll(".kanji-card").forEach(deselectCard);
+    document.getElementById("select-all-btn").querySelector("span:last-child").textContent = "Select All Visible";
+  } else {
+    currentDisplay.forEach(d => selectedKanji.add(d.char));
+    document.querySelectorAll(".kanji-card").forEach(selectCard);
+    document.getElementById("select-all-btn").querySelector("span:last-child").textContent = "Deselect All";
+  }
+  countSpan.textContent = selectedKanji.size;
+});
+
+document.getElementById("mode-romaji").addEventListener("click", () => {
+  quizMode = "romaji";
+  document.getElementById("mode-romaji").className = "flex-1 md:flex-none px-4 py-2 rounded-md bg-surface-bright shadow-sm text-on-surface font-body-md font-medium transition-all";
+  document.getElementById("mode-meaning").className = "flex-1 md:flex-none px-4 py-2 rounded-md text-on-surface-variant hover:text-on-surface font-body-md font-medium transition-all";
+});
+
+document.getElementById("mode-meaning").addEventListener("click", () => {
+  quizMode = "meaning";
+  document.getElementById("mode-meaning").className = "flex-1 md:flex-none px-4 py-2 rounded-md bg-surface-bright shadow-sm text-on-surface font-body-md font-medium transition-all";
+  document.getElementById("mode-romaji").className = "flex-1 md:flex-none px-4 py-2 rounded-md text-on-surface-variant hover:text-on-surface font-body-md font-medium transition-all";
+});
+
+startBtn.addEventListener("click", () => {
+  const pool = kanjiData.filter(d => selectedKanji.has(d.char));
+  if (pool.length === 0) return;
+  quizContainer.classList.remove("hidden");
+  quizContainer.scrollIntoView({ behavior: "smooth" });
+  startQuiz(quizContainer, pool, quizMode, "kanji", {
+    onAnswer: (correct, total) => updateSakura(correct, total),
+    onComplete: (correct, total) => updateProgress("kanji", correct, total),
+    onBack: () => {
+      quizContainer.classList.add("hidden");
+      quizContainer.innerHTML = "";
+      document.querySelector("main").scrollIntoView({ behavior: "smooth" });
+    }
+  });
+});
+
+initSakura("progressive");
+renderKanjiGrid();
+</script>
+</body>
+</html>
