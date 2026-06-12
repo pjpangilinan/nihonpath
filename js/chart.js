@@ -37,7 +37,7 @@ function renderChart(container, dataset, groups, callbacks, initialSelection) {
     section.appendChild(header);
 
     const grid = document.createElement("div");
-    grid.className = "grid grid-cols-5 gap-1";
+    grid.className = "grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-1";
 
     const cards = [];
     chars.forEach(d => {

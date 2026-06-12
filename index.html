@@ -100,67 +100,36 @@ tailwind.config = {
       <p class="font-body-md text-body-md text-secondary">Study essential N5 characters.</p>
     </a>
   </section>
-  <section class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-stack-md md:p-stack-lg shadow-sm">
-    <h3 class="font-headline-md text-headline-md text-on-surface mb-stack-md border-b border-outline-variant/20 pb-unit">Your Progress</h3>
-    <div class="flex flex-col gap-stack-sm" id="progress-dashboard"></div>
-  </section>
 </main>
-<nav class="md:hidden bg-surface border-t border-outline-variant/20 shadow-sm fixed bottom-0 left-0 w-full z-50 flex items-stretch rounded-t-xl">
-  <a class="flex-1 flex flex-col items-center justify-center py-1.5 bg-primary-container text-on-primary-container" href="index.html">
+<nav class="md:hidden bg-surface border-t border-outline-variant/20 shadow-sm fixed bottom-0 left-0 w-full z-50 flex items-stretch overflow-hidden rounded-t-xl">
+  <a class="flex-1 flex flex-col items-center justify-center py-2 bg-primary-container text-on-primary-container" href="index.html">
     <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">home</span>
     <span class="font-bold text-[9px] tracking-normal">Home</span>
   </a>
-  <a class="flex-1 flex flex-col items-center justify-center py-1.5 text-secondary hover:bg-surface-container-high transition-colors" href="hiragana.html">
+  <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="hiragana.html">
     <span class="material-symbols-outlined text-[20px]">language_japanese_kana</span>
     <span class="font-bold text-[9px] tracking-normal">Hiragana</span>
   </a>
-  <a class="flex-1 flex flex-col items-center justify-center py-1.5 text-secondary hover:bg-surface-container-high transition-colors" href="katakana.html">
+  <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="katakana.html">
     <span class="material-symbols-outlined text-[20px]">menu_book</span>
     <span class="font-bold text-[9px] tracking-normal">Katakana</span>
   </a>
-  <a class="flex-1 flex flex-col items-center justify-center py-1.5 text-secondary hover:bg-surface-container-high transition-colors" href="combined.html">
+  <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="combined.html">
     <span class="material-symbols-outlined text-[20px]">layers</span>
     <span class="font-bold text-[9px] tracking-normal">Combined</span>
   </a>
-  <a class="flex-1 flex flex-col items-center justify-center py-1.5 text-secondary hover:bg-surface-container-high transition-colors" href="kanji.html">
+  <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="kanji.html">
     <span class="material-symbols-outlined text-[20px]">translate</span>
     <span class="font-bold text-[9px] tracking-normal">Kanji</span>
   </a>
-  <a class="flex-1 flex flex-col items-center justify-center py-1.5 text-secondary hover:bg-surface-container-high transition-colors" href="progress.html">
+  <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="progress.html">
     <span class="material-symbols-outlined text-[20px]">leaderboard</span>
     <span class="font-bold text-[9px] tracking-normal">Progress</span>
   </a>
 </nav>
 <script src="js/sakura.js"></script>
-<script src="js/progress.js"></script>
 <script>
 initSakura("decorative");
-function renderProgress() {
-  const totals = { hiragana: 71, katakana: 71, combined: 142, kanji: 100 };
-  const sections = [
-    { key: "hiragana", label: "Hiragana" },
-    { key: "katakana", label: "Katakana" },
-    { key: "combined", label: "Combined" },
-    { key: "kanji", label: "Kanji (N5)" }
-  ];
-  const container = document.getElementById("progress-dashboard");
-  if (!container) return;
-  container.innerHTML = sections.map(s => {
-    const cov = getCoverage(s.key, totals[s.key]);
-    return `
-      <div>
-        <div class="flex justify-between items-center mb-unit">
-          <span class="font-body-md text-body-md text-on-surface-variant font-medium">${s.label}</span>
-          <span class="font-label-caps text-label-caps text-primary">${cov}%</span>
-        </div>
-        <div class="h-[8px] bg-surface-container-highest rounded-full w-full overflow-hidden">
-          <div class="h-full bg-primary rounded-full transition-all duration-1000 ease-out" style="width: ${Math.min(100, parseFloat(cov))}%"></div>
-        </div>
-      </div>
-    `;
-  }).join("");
-}
-renderProgress();
 </script>
 </body>
 </html>

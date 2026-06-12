@@ -71,39 +71,38 @@ tailwind.config = {
 </nav>
 <main class="relative z-10 flex-grow pt-[96px] pb-[100px] md:pb-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex flex-col gap-stack-lg">
   <section class="text-center">
-    <h1 class="text-[24px] font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-primary">Your Progress</h1>
-    <p class="font-body-lg text-body-lg text-on-surface-variant mt-stack-sm">Lifetime stats across all sections.</p>
+    <h1 class="text-[24px] font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-primary">Progress</h1>
   </section>
-  <section class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-stack-md md:p-stack-lg shadow-sm">
-    <div class="text-center mb-stack-md pb-stack-md border-b border-outline-variant/20">
-      <span class="font-label-caps text-label-caps text-secondary">OVERALL COVERAGE</span>
-      <div class="font-display-lg text-display-lg text-primary font-bold mt-unit" id="overall-pct">0%</div>
+  <section class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-4 md:p-6 shadow-sm">
+    <div class="text-center pb-3 mb-3 border-b border-outline-variant/20">
+      <span class="font-label-caps text-label-caps text-secondary">OVERALL</span>
+      <div class="font-headline-md text-headline-md text-primary font-bold mt-1" id="overall-pct">0%</div>
     </div>
-    <div class="flex flex-col gap-stack-md" id="progress-detail"></div>
+    <div class="flex flex-col gap-3" id="progress-detail"></div>
   </section>
 </main>
-<nav class="md:hidden bg-surface border-t border-outline-variant/20 shadow-sm fixed bottom-0 left-0 w-full z-50 flex items-stretch rounded-t-xl">
-  <a class="flex-1 flex flex-col items-center justify-center py-1.5 text-secondary hover:bg-surface-container-high transition-colors" href="index.html">
+<nav class="md:hidden bg-surface border-t border-outline-variant/20 shadow-sm fixed bottom-0 left-0 w-full z-50 flex items-stretch overflow-hidden rounded-t-xl">
+  <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="index.html">
     <span class="material-symbols-outlined text-[20px]">home</span>
     <span class="font-bold text-[9px] tracking-normal">Home</span>
   </a>
-  <a class="flex-1 flex flex-col items-center justify-center py-1.5 text-secondary hover:bg-surface-container-high transition-colors" href="hiragana.html">
+  <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="hiragana.html">
     <span class="material-symbols-outlined text-[20px]">language_japanese_kana</span>
     <span class="font-bold text-[9px] tracking-normal">Hiragana</span>
   </a>
-  <a class="flex-1 flex flex-col items-center justify-center py-1.5 text-secondary hover:bg-surface-container-high transition-colors" href="katakana.html">
+  <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="katakana.html">
     <span class="material-symbols-outlined text-[20px]">menu_book</span>
     <span class="font-bold text-[9px] tracking-normal">Katakana</span>
   </a>
-  <a class="flex-1 flex flex-col items-center justify-center py-1.5 text-secondary hover:bg-surface-container-high transition-colors" href="combined.html">
+  <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="combined.html">
     <span class="material-symbols-outlined text-[20px]">layers</span>
     <span class="font-bold text-[9px] tracking-normal">Combined</span>
   </a>
-  <a class="flex-1 flex flex-col items-center justify-center py-1.5 text-secondary hover:bg-surface-container-high transition-colors" href="kanji.html">
+  <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="kanji.html">
     <span class="material-symbols-outlined text-[20px]">translate</span>
     <span class="font-bold text-[9px] tracking-normal">Kanji</span>
   </a>
-  <a class="flex-1 flex flex-col items-center justify-center py-1.5 bg-primary-container text-on-primary-container" href="progress.html">
+  <a class="flex-1 flex flex-col items-center justify-center py-2 bg-primary-container text-on-primary-container" href="progress.html">
     <span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
     <span class="font-bold text-[9px] tracking-normal">Progress</span>
   </a>

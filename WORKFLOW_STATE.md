@@ -80,6 +80,12 @@ Build NihonPath — fully static GitHub Pages Japanese learning site. Hiragana, 
 2. **Home top spacing** — `pt-[80px]` → `pt-[96px]` on index main for breathing room below nav.
 3. **Coverage progress** — Added `getCoverage(section, total)` to `progress.js`. Index dashboard now shows `attempted / total * 100` with 1 decimal (e.g. 36/71 = 50.7%). Bar fills proportionally.
 
+## Round 6 Fixes (2026-06-12)
+1. **Desktop cards smaller** — chart grid: `grid-cols-5` → `grid-cols-5 sm:6 md:8 lg:10`. Desktop cards now ~100×150px (was 220×330px). Mobile unchanged.
+2. **Progress page** — h1 "Progress" (not "Your"). Subtitle removed. Smaller padding `p-4 md:p-6`. Overall label "OVERALL" (verbose gone). Coverage `text-headline-md` down from `text-display-lg`. Gaps tightened.
+3. **Home progress removed** — `<section id="progress-dashboard">` + `renderProgress()` + `progress.js` script deleted from `index.html`. Home is clean hero + 4 nav cards.
+4. **Bottom nav full-width** — `overflow-hidden` added to parent (fixes corner clip on active bg). `py-1.5` → `py-2` on all children for taller buttons. `flex-1` already fills column width.
+
 ## Round 5 Fixes (2026-06-12)
 1. **Cards smaller** — `aspect-[5/6]`→`aspect-[2/3]`, `gap-1.5`→`gap-1`, `rounded-xl`→`rounded-lg`, chars `[16/20/28px]`→`[14/18/24px]`, dot `w-2.5→w-1.5`. Chart cards now 33% shorter.
 2. **Portrait restored** — desktop nav: `stadia_mercury`+% → `account_circle` link to `progress.html`. No text.
