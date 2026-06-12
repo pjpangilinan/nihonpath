@@ -1,7 +1,7 @@
 # Workflow State
 
 ## Status
-Build complete. All Phase 1 + 2 files written. Cleaned extra nihonpath.html. Ready for commit.
+Bug fixes applied. Duplicate kanji removed, missing script added, chart visual state fixed, combined tab selection preserved. Ready to test / deploy.
 
 ## Request
 Build NihonPath — fully static GitHub Pages Japanese learning site. Hiragana, Katakana, Combined, Kanji (JLPT N5). TTS via Web Speech API. Sakura blossom progression. localStorage lifetime stats.
@@ -64,8 +64,26 @@ Build NihonPath — fully static GitHub Pages Japanese learning site. Hiragana, 
 - Mobile bottom nav bar: copy ref's rounded-t-xl with active pill style
 - Kanji rotation: shuffle full 100, take 24, "Reshuffle Grid" re-randomizes
 
+## Handoff Notes
+- 2026-06-12: Scaffold complete. All 6 JS modules + 5 HTML pages + CSS written. Extra nihonpath.html (standalone kanji page, not in plan) removed. Git initialized, commit made. Next: push to GitHub Pages or continue with feature work.
+
+## Bugs Fixed
+1. **Duplicate kanji** `js/data.js:239` — "安" appeared twice (101 entries). Removed duplicate, added missing "車". Now 100 unique N5 kanji.
+2. **Missing sakura.js** `index.html` — only loaded `progress.js`. `initSakura("decorative")` threw ReferenceError. Added `sakura.js` script tag.
+3. **Select All/Clear visual bug** `js/chart.js` — `renderChart` created fresh internal `selected = new Set()` on re-render. Added `initialSelection` param, called `renderCards()` after init to apply visual state.
+4. **Combined tab selection lost** `combined.html` — Tab switch re-rendered chart with empty selection. `updateCombinedSelection` now merges across tabs (preserves other tab's selections).
+5. **Combined Select All clears other tab** `combined.html` — Now preserves other tab's selections when selecting all visible.
+6. **Combined dead code** `combined.html` — Removed unused `hira` variable in `updatePoolCount`.
+
 ## Review Findings
-—
+Bugs fixed via static analysis (Chrome unavailable in this environment). All JS files pass `node --check` syntax validation.
+
+## Test Commands
+```
+cd /home/rantiche/nihonpath
+python3 -m http.server 8080
+# open http://localhost:8080
+```
 
 ## Test Results
 —

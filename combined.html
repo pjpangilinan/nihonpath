@@ -153,20 +153,23 @@ combinedAcc.textContent = getAccuracy("combined") + "%";
 function renderCombinedChart(tab) {
   const data = tab === "hiragana" ? hiraganaData : katakanaData;
   const groups = tab === "hiragana" ? hiraganaGroups : katakanaGroups;
+  const initial = [...currentSelection].filter(c => data.some(d => d.char === c));
   renderChart(chartContainer, data, groups, {
     onSelectionChange: updateCombinedSelection,
     onCharClick: (char) => speak(char)
-  });
+  }, initial);
 }
 
 function updateCombinedSelection(sel) {
-  currentSelection = sel;
-  countSpan.textContent = sel.size;
+  const otherData = currentTab === "hiragana" ? katakanaData : hiraganaData;
+  const otherChars = new Set(otherData.map(d => d.char));
+  const otherSelected = [...currentSelection].filter(c => otherChars.has(c));
+  currentSelection = new Set([...sel, ...otherSelected]);
+  countSpan.textContent = currentSelection.size;
   updatePoolCount();
 }
 
 function updatePoolCount() {
-  const hira = document.querySelectorAll('#chart-container .char-card').length;
   poolCount.textContent = currentSelection.size;
   if (currentSelection.size > 0) {
     startBtn.disabled = false;
@@ -193,7 +196,10 @@ document.getElementById("tab-katakana").addEventListener("click", () => {
 
 selectAllBtn.addEventListener("click", () => {
   const data = currentTab === "hiragana" ? hiraganaData : katakanaData;
-  currentSelection = new Set(data.map(d => d.char));
+  const otherData = currentTab === "hiragana" ? katakanaData : hiraganaData;
+  const all = data.map(d => d.char);
+  const otherSelected = [...currentSelection].filter(c => otherData.some(d => d.char === c));
+  currentSelection = new Set([...all, ...otherSelected]);
   countSpan.textContent = currentSelection.size;
   renderCombinedChart(currentTab);
   updatePoolCount();

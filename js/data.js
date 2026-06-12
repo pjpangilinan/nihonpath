@@ -240,10 +240,10 @@ const kanjiData = [
   { char: "新", romaji: "shin / atarashii", meaning: "new" },
   { char: "古", romaji: "ko / furui", meaning: "old" },
   { char: "高", romaji: "kou / takai", meaning: "high / expensive" },
-  { char: "安", romaji: "an / yasui", meaning: "safe / cheap" },
   { char: "買", romaji: "bai / kau", meaning: "buy" },
   { char: "物", romaji: "butsu / mono", meaning: "thing / object" },
   { char: "道", romaji: "dou / michi", meaning: "road / way" },
+  { char: "車", romaji: "sha / kuruma", meaning: "car / vehicle" },
   { char: "花", romaji: "ka / hana", meaning: "flower" },
   { char: "林", romaji: "rin / hayashi", meaning: "grove / forest" },
   { char: "森", romaji: "shin / mori", meaning: "forest" }

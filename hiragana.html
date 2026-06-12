@@ -144,9 +144,10 @@ renderChart(chartContainer, hiraganaData, hiraganaGroups, {
 });
 
 selectAllBtn.addEventListener("click", () => {
-  currentSelection = new Set(hiraganaData.map(d => d.char));
+  const all = hiraganaData.map(d => d.char);
+  currentSelection = new Set(all);
   countSpan.textContent = currentSelection.size;
-  renderChart(chartContainer, hiraganaData, hiraganaGroups, getChartCallbacks());
+  renderChart(chartContainer, hiraganaData, hiraganaGroups, getChartCallbacks(), all);
   startBtn.disabled = false;
   startBtn.className = "flex items-center gap-2 px-6 py-2 rounded-full bg-primary text-on-primary cursor-pointer shadow-md transition-colors font-bold";
 });
@@ -154,7 +155,7 @@ selectAllBtn.addEventListener("click", () => {
 clearBtn.addEventListener("click", () => {
   currentSelection = new Set();
   countSpan.textContent = 0;
-  renderChart(chartContainer, hiraganaData, hiraganaGroups, getChartCallbacks());
+  renderChart(chartContainer, hiraganaData, hiraganaGroups, getChartCallbacks(), []);
   startBtn.disabled = true;
   startBtn.className = "flex items-center gap-2 px-6 py-2 rounded-full bg-surface-variant text-on-surface-variant cursor-not-allowed transition-colors font-bold";
 });

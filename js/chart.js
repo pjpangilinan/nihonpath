@@ -1,5 +1,5 @@
-function renderChart(container, dataset, groups, callbacks) {
-  const selected = new Set();
+function renderChart(container, dataset, groups, callbacks, initialSelection) {
+  const selected = new Set(initialSelection || []);
   let containerEl = container;
   if (typeof container === "string") containerEl = document.getElementById(container);
   if (!containerEl) return;
@@ -60,6 +60,7 @@ function renderChart(container, dataset, groups, callbacks) {
         updateCardVisual(cards[i], selected.has(d.char));
       });
     }
+    renderCards();
   });
 
   if (callbacks && callbacks.getSelection) {
