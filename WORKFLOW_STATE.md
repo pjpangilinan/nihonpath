@@ -1,7 +1,7 @@
 # Workflow State
 
 ## Status
-Round 15: home cards 2+3, kanji 30 (10×3), labels match chart.js, char size smaller. Distribution plan drafted.
+Phase 1 (CDN removal) done. Tailwind local. Material Symbols font local. Google Fonts replaced w/ system fallback. All pages 0 external requests.
 
 ## Request
 Build NihonPath — fully static GitHub Pages Japanese learning site. Hiragana, Katakana, Combined, Kanji (JLPT N5-N3). Vocabulary (N5-N1). TTS via Web Speech API. Sakura blossom progression. localStorage lifetime stats. Bottom nav: Home+Progress only.
@@ -278,7 +278,15 @@ Ship NihonPath as a self-contained, offline-capable package. Zero CDN dependency
 5. **Smaller char** — kanji card character: `24/26/32` → `20/22/26`.
 6. **Distribution plan** — Added to WORKFLOW_STATE.md. Phased approach: inline CDN deps → build script → PWA.
 
+## Phase 1 Complete — CDN Removal (2026-06-13)
+1. **Tailwind CDN** → `tailwind.config.js` + `npx tailwindcss` → `css/tailwind.css`. Removed CDN script from all 7 HTML files.
+2. **Google Fonts** → System font fallback. Removed Noto Sans/Noto Sans JP/Plus Jakarta Sans from all pages. Defined fallbacks (`system-ui`, `Hiragino Sans`, `Yu Gothic`, `MS Gothic`) in `tailwind.config.js`.
+3. **Material Symbols** → Local woff2 font at `css/fonts/MaterialSymbolsOutlined.woff2` (1.1MB). `@font-face` in `style.css`.
+4. **Dead config** — Removed inline `tailwind.config` script from all pages (redundant with pre-built CSS).
+5. **Build tooling** — `package.json`, `tailwind.config.js`, `tailwind-input.css` committed. Rebuild with `npx tailwindcss -i tailwind-input.css -o css/tailwind.css --config tailwind.config.js`.
+
 ## Handoff Notes
+- 2026-06-13: Phase 1 CDN removal complete. 0 external requests. Tailwind local, Material Symbols local, fonts local. Next: Phase 2 (build script) or Phase 3 (PWA).
 - 2026-06-13: Round 15 — home 2+3, kanji 30, labels chart.js style, chars smaller, distribution plan in WORKFLOW_STATE.md.
 - 2026-06-13: Major restructure. Bottom nav = Home+Progress only. Desktop nav = all 6 sections. Vocab page live at `vocab.html`. Kanji = 500 entries, 25 visible. `quiz.js` handles vocab (j2e/e2j). All `node --check` pass.
 - 2026-06-13: Kanji grid now shows all 100 cards with chart.js card styling. Flat grid, no groups. `makeKanjiCard()`/`updateCardVisual()` mirror `chart.js` functions.
