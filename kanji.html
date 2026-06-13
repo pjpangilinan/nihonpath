@@ -81,7 +81,9 @@ tailwind.config = {
     <span class="material-symbols-outlined" aria-hidden="true">select_check_box</span>
     <span>Selected: <strong class="font-bold" id="selected-count">0</strong></span>
   </section>
-  <section class="grid grid-cols-5 sm:grid-cols-5 md:grid-cols-4 lg:grid-cols-6 gap-1" id="kanji-grid"></section>
+  <section class="bg-surface-bright rounded-xl border border-outline-variant/30 p-gutter shadow-sm">
+    <div class="grid grid-cols-5 md:grid-cols-10 gap-[4px]" id="kanji-grid"></div>
+  </section>
   <section class="bg-surface-container-low rounded-xl p-stack-md shadow-sm border border-outline-variant/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-stack-md">
     <div class="flex flex-wrap gap-stack-sm w-full">
       <button id="reshuffle-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-bright border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-colors w-full justify-center">
@@ -137,7 +139,6 @@ tailwind.config = {
 <script src="js/sakura.js"></script>
 <script src="js/quiz.js"></script>
 <script>
-const VISIBLE_COUNT = 24;
 let currentDisplay = [];
 let selectedKanji = new Set();
 let quizMode = "romaji";
@@ -155,60 +156,51 @@ function shuffle(arr) {
   return arr;
 }
 
+function makeKanjiCard(d) {
+  const card = document.createElement("button");
+  card.type = "button";
+  card.className = "kanji-card aspect-[1/1] bg-surface border border-outline-variant/50 rounded-md flex flex-col items-center justify-center hover:shadow-sm transition-[color,background-color,border-color,box-shadow] duration-200 relative group";
+  card.dataset.char = d.char;
+  card.setAttribute("aria-label", `${d.char} - ${d.romaji} - ${d.meaning}`);
+  card.innerHTML = `
+    <div class="absolute top-[1px] right-[1px] w-[2px] h-[2px] rounded-full border border-outline-variant transition-colors dot-indicator"></div>
+    <span class="font-japanese-character text-[24px] sm:text-[26px] md:text-[32px] text-on-surface">${d.char}</span>
+    <span class="font-label-caps text-label-caps text-secondary absolute bottom-[1px] opacity-0 group-hover:opacity-100 transition-opacity text-[9px] leading-none">${d.romaji}</span>
+  `;
+  card.addEventListener("click", () => {
+    if (selectedKanji.has(d.char)) {
+      selectedKanji.delete(d.char);
+      updateCardVisual(card, false);
+    } else {
+      selectedKanji.add(d.char);
+      updateCardVisual(card, true);
+    }
+    countSpan.textContent = selectedKanji.size;
+    speak(d.char);
+  });
+  return card;
+}
+
+function updateCardVisual(card, isSelected) {
+  const dot = card.querySelector(".dot-indicator");
+  if (isSelected) {
+    card.classList.add("ring-2", "ring-primary", "bg-primary-container/20");
+    if (dot) { dot.classList.add("bg-primary", "border-primary"); dot.classList.remove("border-outline-variant"); }
+  } else {
+    card.classList.remove("ring-2", "ring-primary", "bg-primary-container/20");
+    if (dot) { dot.classList.remove("bg-primary", "border-primary"); dot.classList.add("border-outline-variant"); }
+  }
+}
+
 function renderKanjiGrid() {
-  currentDisplay = shuffle([...kanjiData]).slice(0, VISIBLE_COUNT);
+  currentDisplay = shuffle([...kanjiData]);
   selectedKanji = new Set();
   countSpan.textContent = 0;
   grid.innerHTML = "";
-
   currentDisplay.forEach(d => {
-    const card = document.createElement("button");
-    card.type = "button";
-    card.className = "kanji-card relative group bg-surface-bright border border-primary-fixed-dim rounded-xl p-1 flex flex-col items-center justify-center aspect-[1/1] transition-[color,background-color,border-color,box-shadow] duration-300 hover:shadow-md";
-    card.setAttribute("aria-label", `${d.char} - ${d.romaji} - ${d.meaning}`);
-    card.innerHTML = `
-      <div class="selection-indicator absolute top-1 left-1 w-4 h-4 rounded-full border-2 border-outline-variant flex items-center justify-center transition-colors">
-        <span class="material-symbols-outlined text-[12px] text-surface-bright opacity-0" aria-hidden="true">check</span>
-      </div>
-        <div class="font-japanese-character text-[20px] text-on-surface mb-1 mt-1 select-none">${d.char}</div>
-      <div class="w-full mt-auto opacity-0 group-hover:opacity-100 transition-opacity text-center flex flex-col items-center bg-surface-container-low p-1.5 rounded-md absolute bottom-1 left-1 right-1">
-        <span class="font-label-caps text-label-caps text-primary">${d.romaji}</span>
-        <span class="font-body-md text-[11px] text-on-surface-variant truncate w-full">${d.meaning}</span>
-      </div>
-    `;
-    card.addEventListener("click", () => {
-      if (selectedKanji.has(d.char)) {
-        selectedKanji.delete(d.char);
-        deselectCard(card);
-      } else {
-        selectedKanji.add(d.char);
-        selectCard(card);
-      }
-      countSpan.textContent = selectedKanji.size;
-      speak(d.char);
-    });
+    const card = makeKanjiCard(d);
     grid.appendChild(card);
   });
-}
-
-function selectCard(card) {
-  card.classList.add("ring-2", "ring-primary", "bg-primary-container/20");
-  const indicator = card.querySelector(".selection-indicator");
-  if (indicator) {
-    indicator.classList.remove("border-outline-variant");
-    indicator.classList.add("bg-primary", "border-primary");
-    indicator.querySelector("span").classList.remove("opacity-0");
-  }
-}
-
-function deselectCard(card) {
-  card.classList.remove("ring-2", "ring-primary", "bg-primary-container/20");
-  const indicator = card.querySelector(".selection-indicator");
-  if (indicator) {
-    indicator.classList.add("border-outline-variant");
-    indicator.classList.remove("bg-primary", "border-primary");
-    indicator.querySelector("span").classList.add("opacity-0");
-  }
 }
 
 document.getElementById("reshuffle-btn").addEventListener("click", renderKanjiGrid);
@@ -217,11 +209,11 @@ document.getElementById("select-all-btn").addEventListener("click", () => {
   const allSelected = selectedKanji.size === currentDisplay.length;
   if (allSelected) {
     selectedKanji.clear();
-    document.querySelectorAll(".kanji-card").forEach(deselectCard);
+    document.querySelectorAll(".kanji-card").forEach(c => updateCardVisual(c, false));
     document.getElementById("select-all-btn").querySelector("span:last-child").textContent = "Select All Visible";
   } else {
     currentDisplay.forEach(d => selectedKanji.add(d.char));
-    document.querySelectorAll(".kanji-card").forEach(selectCard);
+    document.querySelectorAll(".kanji-card").forEach(c => updateCardVisual(c, true));
     document.getElementById("select-all-btn").querySelector("span:last-child").textContent = "Deselect All";
   }
   countSpan.textContent = selectedKanji.size;

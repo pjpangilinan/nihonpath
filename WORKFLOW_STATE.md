@@ -184,6 +184,15 @@ python3 -m http.server 8080
 11. **Transition specificity** — Index nav cards/kanji cards: `transition-all` → `transition-[color,background-color,border-color,box-shadow]`. Chart cards same.
 12. **Bottom nav** — Added `aria-label="Main navigation"`, `aria-current="page"` on active link.
 
+## Round 12 — Kanji Grid Match Chart Cards (2026-06-13)
+1. **All 100 kanji** — Removed 24-card limit. `renderKanjiGrid()` shows all 100 shuffled.
+2. **Chart-style cards** — `bg-surface border border-outline-variant/50 rounded-md`, dot-indicator (top-right 2px dot), char `text-[24/26/32px]`, romaji hover label `bottom-[1px] text-[9px]`. Matches chart.js `makeCard()` exactly.
+3. **Flat responsive grid** — `grid-cols-5 md:grid-cols-10 gap-[4px]` inside `bg-surface-bright rounded-xl border` container.
+4. **`updateCardVisual()`** — Replaced `selectCard`/`deselectCard` with single function matching chart.js pattern (dot classList toggle).
+5. **`makeKanjiCard()`** — Factory function parallels chart.js `makeCard()`. Same classes, same visual structure.
+6. **Removed VISIBLE_COUNT** — No more 24-card cap.
+
 ## Handoff Notes
+- 2026-06-13: Kanji grid now shows all 100 cards with chart.js card styling. Flat grid, no groups. `makeKanjiCard()`/`updateCardVisual()` mirror `chart.js` functions.
 - 2026-06-12: Proper gojuon chart. Columns = consonant groups, RTL order. Column select buttons top. Vowel buttons right. Empty cells dashed. Mobile same.
 - 2026-06-12: Web design guidelines (accessibility) fixes applied across all 6 HTML + 4 JS + CSS. Focus states, semantic buttons, ARIA labels, skip link, reduced motion, tab interaction, confirmation dialogs. All JS passes `node --check`.
