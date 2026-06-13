@@ -1,7 +1,7 @@
 # Workflow State
 
 ## Status
-Phase 1 (CDN removal) done. Tailwind local. Material Symbols font local. Google Fonts replaced w/ system fallback. All pages 0 external requests.
+Phase 1 ✅ (CDN removal). Phase 2 ✅ (dir + Docker). Phase 3 ✅ (GitHub Pages deploy workflow).
 
 ## Request
 Build NihonPath — fully static GitHub Pages Japanese learning site. Hiragana, Katakana, Combined, Kanji (JLPT N5-N3). Vocabulary (N5-N1). TTS via Web Speech API. Sakura blossom progression. localStorage lifetime stats. Bottom nav: Home+Progress only.
@@ -220,6 +220,11 @@ Ship NihonPath as a self-contained, offline-capable package. Zero CDN dependency
 | Google Fonts | `fonts.googleapis.com` + `fonts.gstatic.com` | Blocks render w/o internet |
 | Material Symbols | `fonts.googleapis.com` (icon font) | Same Google font dep |
 
+### Directory Cleanup First ✅
+- Moved all `.html` → `pages/` dir. Updated CSS/JS paths (`../` prefixed).
+- Root now: `Dockerfile`, `.dockerignore`, `package.json`, `tailwind.*`, `.gitignore`, `css/`, `js/`, `pages/`.
+- Clean GitHub tree. Nginx serves `pages/index.html` at `/` via `index` directive.
+
 ### Approach Options
 
 **A) Single-file self-contained HTML** — inline everything
@@ -230,12 +235,11 @@ Ship NihonPath as a self-contained, offline-capable package. Zero CDN dependency
 - Pros: Zero external deps. Works offline. Drag-and-drop share.
 - Cons: Each HTML file larger (~50KB). Change = rebuild all.
 
-**B) ZIP bundle with local assets**
-- `wget` mirror all CDN resources into `vendor/` dir
-- Rewrite `<link>`/`<script>` `src` to local paths
-- Package as ZIP
-- Pros: Quick. Low effort.
-- Cons: Still loads Google Fonts from local file (slower than CDN). Bundled font files large.
+**B) Docker image**
+- `Dockerfile` using nginx:alpine — copies static files, exposes port 80
+- Single command: `docker run -p 8080:80 nihonpath`
+- Pros: Zero-config deploy anywhere (VPS, NAS, local). Works offline. Familiar ops.
+- Cons: Requires Docker. Slightly larger image (~20MB with nginx:alpine).
 
 **C) PWA offline-first**
 - Add `manifest.json` + service worker
@@ -244,19 +248,16 @@ Ship NihonPath as a self-contained, offline-capable package. Zero CDN dependency
 - Pros: Best UX after first visit.
 - Cons: Requires server to serve SW. First visit needs internet.
 
-### Recommended Plan (A → B → C phased)
+### Recommended Plan (Docker + PWA)
 
-**Phase 1 — Remove CDN deps (single-file HTML)**
-1. Run Tailwind CLI `--content "*.html" --output css/tailwind.css` — captures all utility classes
-2. Remove Tailwind CDN `<script>` from all pages, replace with `<link href="css/tailwind.css">`
-3. Replace Google Fonts `@import` with system font fallback in `style.css`
-4. Replace Material Symbols icon spans with inline SVGs (20 unique icons)
-5. Inline all JS modules into each page or keep as separate files in `js/`
+**Phase 1 — CDN deps removed** ✅ Done.
 
-**Phase 2 — Self-contained build script**
-1. Write `build.js` (Node) that reads each .html, inlines JS/CSS, outputs to `dist/`
-2. `dist/` = fully static, zero external deps, works offline
-3. Single ZIP: `nihonpath-v1.zip` from `dist/`
+**Phase 2 — Dockerize** ✅ Done.
+1. Wrote `Dockerfile` — `FROM nginx:alpine`, inline nginx config via `echo`, `COPY . /usr/share/nginx/html`
+2. Wrote `.dockerignore` — excludes `node_modules/`, `.git/`, `*.md`, build artifacts, nginx config
+3. Build: `docker build -t nihonpath .` ✅
+4. Run: `docker run -p 8080:80 nihonpath` — serves `pages/index.html` at `/` via `index pages/index.html` directive
+5. All routes verified: `/` (200), `/pages/hiragana.html` (200), `/css/tailwind.css` (200), `/js/data.js` (200)
 
 **Phase 3 — PWA polish (optional)**
 1. Create `manifest.json` with app name, icons, theme color
@@ -266,8 +267,8 @@ Ship NihonPath as a self-contained, offline-capable package. Zero CDN dependency
 ### Effort Estimate
 | Phase | Files Changed | Effort |
 |---|---|---|
-| Phase 1 | 7 HTML + 1 CSS + 6 JS | ~2h |
-| Phase 2 | 1 new build.js | ~30min |
+| Phase 1 | 7 HTML + 1 CSS + 6 JS | ~2h ✅ done |
+| Phase 2 | 5 files (pages/ dir move, nginx.conf, Dockerfile, .dockerignore) | ~30min ✅ done |
 | Phase 3 | 2 new files + 7 HTML meta tags | ~1h |
 
 ## Round 15 — Kanji 30, labels match chart, home 2+3, smaller chars (2026-06-13)
@@ -285,8 +286,24 @@ Ship NihonPath as a self-contained, offline-capable package. Zero CDN dependency
 4. **Dead config** — Removed inline `tailwind.config` script from all pages (redundant with pre-built CSS).
 5. **Build tooling** — `package.json`, `tailwind.config.js`, `tailwind-input.css` committed. Rebuild with `npx tailwindcss -i tailwind-input.css -o css/tailwind.css --config tailwind.config.js`.
 
+## Round 16 — Directory organization + Docker (2026-06-13)
+1. **All HTML → `pages/`** — `mkdir pages/`, `mv` all 8 `.html` files. Root now clean: `Dockerfile`, `.dockerignore`, `css/`, `js/`, `pages/`, `package.json`, `tailwind.*`.
+2. **CSS/JS paths updated** — `sed` across all 7 main HTML files: `href="css/"` → `href="../css/"`, `src="js/"` → `src="../js/"`. Inter-page links unchanged (same dir).
+3. **`hiragana-katakana-chart.html`** — Moved to `pages/` as-is. Still uses CDN Tailwind + Google Fonts (separate conversion needed). Nav links are `#` placeholders.
+4. **`nginx.conf`** — Custom config: `root /usr/share/nginx/html; index pages/index.html;`. Serves `pages/index.html` at `/`, static assets at `/css/...` and `/js/...`.
+5. **`Dockerfile`** — `FROM nginx:alpine`, nginx config generated via `echo`, `COPY . /usr/share/nginx/html/`.
+6. **`.dockerignore`** — Excludes `node_modules/`, `.git/`, `*.md`, config files, build artifacts.
+7. **Build verified** — `docker build -t nihonpath` succeeded. All routes return 200.
+
+## Round 17 — GitHub Pages ready + progress totals fix + icon size (2026-06-13)
+1. **Kanji total 100→500** — `progress.js` + `progress.html`: totals object `kanji: 100` → `kanji: 500`. Adds `vocab: 200` to totals.
+2. **Vocab in progress** — `progress.js` default data: added `vocab: { attempted: 0, correct: 0 }`. `progress.html` sections: added `{ key: "vocab", label: "Vocabulary" }`.
+3. **Desktop progress icon bigger** — All 7 pages: `account_circle` now `text-[28px]` + filled variant (`style="font-variation-settings:'FILL' 1"`). More visual weight.
+4. **GitHub Actions deploy workflow** — `.github/workflows/deploy.yml`. On push to main: flattens `pages/*` + `css/` + `js/` into `_site/`, fixes `../` paths → root-relative. Deploys via `actions/deploy-pages@v4`.
+5. **All JS pass `node --check`** — Verified.
+
 ## Handoff Notes
-- 2026-06-13: Phase 1 CDN removal complete. 0 external requests. Tailwind local, Material Symbols local, fonts local. Next: Phase 2 (build script) or Phase 3 (PWA).
+- 2026-06-13: GitHub Pages ready. Push to `main` triggers auto-deploy. Repo settings: enable Pages via GitHub Actions. hiragana-katakana-chart.html still CDN but deploys as-is (no path fix needed).
 - 2026-06-13: Round 15 — home 2+3, kanji 30, labels chart.js style, chars smaller, distribution plan in WORKFLOW_STATE.md.
 - 2026-06-13: Major restructure. Bottom nav = Home+Progress only. Desktop nav = all 6 sections. Vocab page live at `vocab.html`. Kanji = 500 entries, 25 visible. `quiz.js` handles vocab (j2e/e2j). All `node --check` pass.
 - 2026-06-13: Kanji grid now shows all 100 cards with chart.js card styling. Flat grid, no groups. `makeKanjiCard()`/`updateCardVisual()` mirror `chart.js` functions.

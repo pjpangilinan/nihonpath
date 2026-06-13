@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#faf9f6">
-<title>NihonPath — Hiragana Study</title>
-<link href="css/tailwind.css" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<title>NihonPath — Katakana Study</title>
+<link href="../css/tailwind.css" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
 <link rel="prefetch" href="index.html">
-<link rel="prefetch" href="katakana.html">
+<link rel="prefetch" href="hiragana.html">
 <link rel="prefetch" href="combined.html">
 <link rel="prefetch" href="kanji.html">
 <link rel="prefetch" href="progress.html">
@@ -22,20 +22,20 @@
   <div class="font-headline-md text-headline-md font-bold text-primary">NihonPath</div>
   <ul class="flex items-center gap-gutter">
     <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="index.html">Home</a></li>
-    <li><a class="block py-1 text-primary font-bold border-b-2 border-primary" href="hiragana.html">Hiragana</a></li>
-    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="katakana.html">Katakana</a></li>
+    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="hiragana.html">Hiragana</a></li>
+    <li><a class="block py-1 text-primary font-bold border-b-2 border-primary" href="katakana.html">Katakana</a></li>
     <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="combined.html">Combined</a></li>
     <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="kanji.html">Kanji</a></li>
     <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="vocab.html">Vocab</a></li>
   </ul>
   <a aria-label="Progress" class="text-secondary hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-container-high" href="progress.html">
-    <span class="material-symbols-outlined" aria-hidden="true">account_circle</span>
+    <span class="material-symbols-outlined text-[28px]" aria-hidden="true" style="font-variation-settings:'FILL' 1">account_circle</span>
   </a>
 </nav>
 <main id="main-content" class="relative z-10 flex-grow pt-[96px] pb-[100px] md:pb-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex flex-col gap-stack-lg">
   <section class="text-center">
-    <h1 class="text-[24px] font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-primary">Hiragana Study</h1>
-    <p class="font-body-lg text-body-lg text-on-surface-variant mt-stack-sm">Select characters to focus on, listen to pronunciation, and test your knowledge.</p>
+    <h1 class="text-[24px] font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-primary">Katakana Study</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant mt-stack-sm">Master the angular shapes of Katakana, used for foreign words and emphasis.</p>
   </section>
   <section class="bg-surface-bright rounded-xl border border-outline-variant/30 p-gutter shadow-sm flex flex-col gap-stack-md">
     <div class="flex flex-col md:flex-row justify-between items-center gap-stack-sm border-b border-outline-variant/20 pb-4">
@@ -75,12 +75,12 @@
     <span class="font-bold text-[9px] tracking-normal">Progress</span>
   </a>
 </nav>
-<script src="js/data.js"></script>
-<script src="js/tts.js"></script>
-<script src="js/progress.js"></script>
-<script src="js/sakura.js"></script>
-<script src="js/chart.js"></script>
-<script src="js/quiz.js"></script>
+<script src="../js/data.js"></script>
+<script src="../js/tts.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/sakura.js"></script>
+<script src="../js/chart.js"></script>
+<script src="../js/quiz.js"></script>
 <script>
 let currentSelection = new Set();
 let currentDifficulty = "beginner";
@@ -130,8 +130,8 @@ function updateDifficultyLocks() {
 }
 
 function renderDifficultyChart(initialSelection) {
-  const groups = getFilteredGroups(hiraganaGroups);
-  renderChart(chartContainer, hiraganaData, groups, {
+  const groups = getFilteredGroups(katakanaGroups);
+  renderChart(chartContainer, katakanaData, groups, {
     onSelectionChange: (sel) => {
       currentSelection = sel;
       countSpan.textContent = sel.size;
@@ -154,9 +154,9 @@ difficultyBtns.forEach(btn => {
 renderDifficultyChart();
 
 selectAllBtn.addEventListener("click", () => {
-  const groups = getFilteredGroups(hiraganaGroups);
+  const groups = getFilteredGroups(katakanaGroups);
   const visibleKeys = new Set(groups.map(g => g.key));
-  const all = hiraganaData.filter(d => visibleKeys.has(d.group)).map(d => d.char);
+  const all = katakanaData.filter(d => visibleKeys.has(d.group)).map(d => d.char);
   currentSelection = new Set(all);
   countSpan.textContent = currentSelection.size;
   renderDifficultyChart(all);
@@ -177,15 +177,15 @@ listenBtn.addEventListener("click", () => {
 });
 
 startBtn.addEventListener("click", () => {
-  const pool = hiraganaData.filter(d => currentSelection.has(d.char));
+  const pool = katakanaData.filter(d => currentSelection.has(d.char));
   if (pool.length === 0) return;
   quizContainer.classList.remove("hidden");
   requestAnimationFrame(() => quizContainer.scrollIntoView({ behavior: "smooth", block: "start" }));
-  startQuiz(quizContainer, pool, "romaji", "hiragana", {
+  startQuiz(quizContainer, pool, "romaji", "katakana", {
     multiChar: true,
     onAnswer: (correct, total) => updateSakura(correct, total),
     onComplete: (correct, total) => {
-      updateProgress("hiragana", correct, correct);
+      updateProgress("katakana", correct, correct);
       updateDifficultyLocks();
     },
     onBack: () => {

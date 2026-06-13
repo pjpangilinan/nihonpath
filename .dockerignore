@@ -1,0 +1,15 @@
+node_modules
+.git
+.gitignore
+.opencode
+.serena
+AGENTS.md
+opencode.json
+package.json
+package-lock.json
+tailwind-input.css
+tailwind.config.js
+WORKFLOW_STATE.md
+nginx.conf
+Dockerfile
+.dockerignore

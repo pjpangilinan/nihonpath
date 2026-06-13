@@ -10,7 +10,8 @@ function getProgress() {
     hiragana: { attempted: 0, correct: 0 },
     katakana: { attempted: 0, correct: 0 },
     combined: { attempted: 0, correct: 0 },
-    kanji: { attempted: 0, correct: 0 }
+    kanji: { attempted: 0, correct: 0 },
+    vocab: { attempted: 0, correct: 0 }
   };
 }
 
@@ -45,7 +46,7 @@ function getTotalCorrect() {
 
 function getOverallCoverage() {
   const data = getProgress();
-  const totals = { hiragana: 71, katakana: 71, combined: 142, kanji: 100 };
+  const totals = { hiragana: 71, katakana: 71, combined: 142, kanji: 500, vocab: 200 };
   let totalAttempted = 0;
   let totalChars = 0;
   for (const [k, total] of Object.entries(totals)) {

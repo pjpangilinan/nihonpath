@@ -6,8 +6,8 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#faf9f6">
 <title>NihonPath — Kanji Explorer</title>
-<link href="css/tailwind.css" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link href="../css/tailwind.css" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
 <link rel="prefetch" href="index.html">
 <link rel="prefetch" href="hiragana.html">
 <link rel="prefetch" href="katakana.html">
@@ -29,7 +29,7 @@
     <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="vocab.html">Vocab</a></li>
   </ul>
   <a aria-label="Progress" class="text-secondary hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-container-high" href="progress.html">
-    <span class="material-symbols-outlined" aria-hidden="true">account_circle</span>
+    <span class="material-symbols-outlined text-[28px]" aria-hidden="true" style="font-variation-settings:'FILL' 1">account_circle</span>
   </a>
 </nav>
 <main id="main-content" class="relative z-10 flex-grow pt-[96px] pb-[100px] md:pb-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex flex-col gap-stack-lg">
@@ -77,11 +77,11 @@
     <span class="font-bold text-[9px] tracking-normal">Progress</span>
   </a>
 </nav>
-<script src="js/data.js"></script>
-<script src="js/tts.js"></script>
-<script src="js/progress.js"></script>
-<script src="js/sakura.js"></script>
-<script src="js/quiz.js"></script>
+<script src="../js/data.js"></script>
+<script src="../js/tts.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/sakura.js"></script>
+<script src="../js/quiz.js"></script>
 <script>
 let currentDisplay = [];
 let selectedKanji = new Set();
