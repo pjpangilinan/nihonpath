@@ -60,51 +60,51 @@ tailwind.config = {
 <body class="text-on-surface antialiased min-h-screen flex flex-col washi-bg">
 <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:bg-surface focus:text-on-surface focus:p-3 focus:rounded-lg focus:shadow-lg">Skip to main content</a>
 <div id="sakura-container"></div>
-    <nav aria-label="Main navigation" class="hidden md:flex bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 fixed top-0 w-full z-50 flex-col px-6 py-2">
-  <div class="flex items-center justify-between w-full">
-    <a href="index.html" class="font-headline-md text-headline-md font-bold text-primary">NihonPath</a>
-    <div class="flex items-center gap-4">
-      <a class="text-sm font-body-md text-primary font-bold border-b border-primary" href="index.html">Home</a>
-      <a class="text-sm font-body-md text-secondary hover:text-primary transition-colors" href="progress.html">Progress</a>
-    </div>
-  </div>
-  <div class="flex items-center justify-end gap-4 mt-0.5">
-    <a class="text-sm font-body-md text-secondary hover:text-primary transition-colors" href="hiragana.html">Hiragana</a>
-    <a class="text-sm font-body-md text-secondary hover:text-primary transition-colors" href="combined.html">Combined</a>
-    <a class="text-sm font-body-md text-secondary hover:text-primary transition-colors" href="kanji.html">Kanji</a>
-  </div>
+    <nav aria-label="Main navigation" class="hidden md:flex bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 fixed top-0 w-full z-50 justify-between items-center px-6 py-4">
+  <div class="font-headline-md text-headline-md font-bold text-primary">NihonPath</div>
+  <ul class="flex items-center gap-gutter">
+    <li><a class="block py-1 text-primary font-bold border-b-2 border-primary" href="index.html">Home</a></li>
+    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="hiragana.html">Hiragana</a></li>
+    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="katakana.html">Katakana</a></li>
+    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="combined.html">Combined</a></li>
+    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="kanji.html">Kanji</a></li>
+    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="vocab.html">Vocab</a></li>
+  </ul>
+  <a aria-label="Progress" class="text-secondary hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-container-high" href="progress.html">
+    <span class="material-symbols-outlined" aria-hidden="true">account_circle</span>
+  </a>
 </nav>
 <main id="main-content" class="relative z-10 flex-grow pt-[96px] pb-[100px] md:pb-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex flex-col gap-stack-lg">
   <section class="text-center max-w-2xl mx-auto flex flex-col gap-stack-sm">
     <h1 class="text-[24px] font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-primary">Master the Way of Japanese</h1>
     <p class="font-body-lg text-body-lg text-on-surface-variant">A free, static Japanese learning platform for Hiragana, Katakana, and JLPT N5 Kanji.</p>
   </section>
-  <section class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
-    <a class="group bg-surface-container-lowest rounded-xl border border-primary-container p-stack-md flex flex-col items-center justify-center text-center transition-transform transition-shadow duration-300 hover:shadow-lg hover:-translate-y-1 relative overflow-hidden" href="hiragana.html">
+  <section class="grid grid-cols-2 md:grid-cols-6 gap-gutter">
+    <a class="group bg-surface-container-lowest rounded-xl border border-primary-container p-stack-md flex flex-col items-center justify-center text-center transition-transform transition-shadow duration-300 hover:shadow-lg hover:-translate-y-1 relative overflow-hidden col-span-2 md:col-span-3" href="hiragana.html">
       <div class="absolute -right-4 -bottom-8 opacity-5 text-primary" aria-hidden="true"><span class="font-japanese-character text-[64px]">あ</span></div>
       <div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center text-primary mb-stack-sm"><span class="material-symbols-outlined text-[32px]" aria-hidden="true">language_japanese_kana</span></div>
       <h2 class="font-headline-md text-headline-md text-on-surface mb-unit group-hover:text-primary transition-colors">Hiragana</h2>
       <p class="font-body-md text-body-md text-secondary">Learn the basic script.</p>
     </a>
-    <a class="group bg-surface-container-lowest rounded-xl border border-primary-container p-stack-md flex flex-col items-center justify-center text-center transition-transform transition-shadow duration-300 hover:shadow-lg hover:-translate-y-1 relative overflow-hidden" href="katakana.html">
+    <a class="group bg-surface-container-lowest rounded-xl border border-primary-container p-stack-md flex flex-col items-center justify-center text-center transition-transform transition-shadow duration-300 hover:shadow-lg hover:-translate-y-1 relative overflow-hidden col-span-2 md:col-span-3" href="katakana.html">
       <div class="absolute -right-4 -bottom-8 opacity-5 text-primary" aria-hidden="true"><span class="font-japanese-character text-[64px]">ア</span></div>
       <div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center text-primary mb-stack-sm"><span class="material-symbols-outlined text-[32px]" aria-hidden="true">menu_book</span></div>
       <h2 class="font-headline-md text-headline-md text-on-surface mb-unit group-hover:text-primary transition-colors">Katakana</h2>
       <p class="font-body-md text-body-md text-secondary">Master foreign loanwords.</p>
     </a>
-    <a class="group bg-surface-container-lowest rounded-xl border border-primary-container p-stack-md flex flex-col items-center justify-center text-center transition-transform transition-shadow duration-300 hover:shadow-lg hover:-translate-y-1 relative overflow-hidden" href="combined.html">
+    <a class="group bg-surface-container-lowest rounded-xl border border-primary-container p-stack-md flex flex-col items-center justify-center text-center transition-transform transition-shadow duration-300 hover:shadow-lg hover:-translate-y-1 relative overflow-hidden col-span-2 md:col-span-2" href="combined.html">
       <div class="absolute -right-4 -bottom-8 opacity-5 text-primary" aria-hidden="true"><span class="font-japanese-character text-[64px]">文</span></div>
       <div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center text-primary mb-stack-sm"><span class="material-symbols-outlined text-[32px]" aria-hidden="true">layers</span></div>
       <h2 class="font-headline-md text-headline-md text-on-surface mb-unit group-hover:text-primary transition-colors">Combined</h2>
       <p class="font-body-md text-body-md text-secondary">Test both kana together.</p>
     </a>
-    <a class="group bg-surface-container-lowest rounded-xl border border-primary-container p-stack-md flex flex-col items-center justify-center text-center transition-transform transition-shadow duration-300 hover:shadow-lg hover:-translate-y-1 relative overflow-hidden" href="kanji.html">
+    <a class="group bg-surface-container-lowest rounded-xl border border-primary-container p-stack-md flex flex-col items-center justify-center text-center transition-transform transition-shadow duration-300 hover:shadow-lg hover:-translate-y-1 relative overflow-hidden col-span-2 md:col-span-2" href="kanji.html">
       <div class="absolute -right-4 -bottom-8 opacity-5 text-primary" aria-hidden="true"><span class="font-japanese-character text-[64px]">漢</span></div>
       <div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center text-primary mb-stack-sm"><span class="material-symbols-outlined text-[32px]" aria-hidden="true">translate</span></div>
       <h2 class="font-headline-md text-headline-md text-on-surface mb-unit group-hover:text-primary transition-colors">Kanji</h2>
       <p class="font-body-md text-body-md text-secondary">Study essential N5 characters.</p>
     </a>
-    <a class="group bg-surface-container-lowest rounded-xl border border-primary-container p-stack-md flex flex-col items-center justify-center text-center transition-transform transition-shadow duration-300 hover:shadow-lg hover:-translate-y-1 relative overflow-hidden md:col-span-2" href="vocab.html">
+    <a class="group bg-surface-container-lowest rounded-xl border border-primary-container p-stack-md flex flex-col items-center justify-center text-center transition-transform transition-shadow duration-300 hover:shadow-lg hover:-translate-y-1 relative overflow-hidden col-span-2 md:col-span-2" href="vocab.html">
       <div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center text-primary mb-stack-sm"><span class="material-symbols-outlined text-[32px]" aria-hidden="true">dictionary</span></div>
       <h2 class="font-headline-md text-headline-md text-on-surface mb-unit group-hover:text-primary transition-colors">Vocabulary</h2>
       <p class="font-body-md text-body-md text-secondary">5,000 words across all JLPT levels. Japanese ↔ English.</p>
