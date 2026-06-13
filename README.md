@@ -70,7 +70,7 @@ docker run -p 8080:80 nihonpath
 # Open http://localhost:8080
 ```
 
-Docker uses nginx with `index pages/index.html` so root URL serves the site. Static assets (`css/`, `js/`) resolve automatically.
+Docker copies `pages/*` to nginx root, `css/` → `nginx/html/css/`, `js/` → `nginx/html/js/`. Root URL serves `index.html` directly. No custom nginx config needed.
 
 ## Development
 
