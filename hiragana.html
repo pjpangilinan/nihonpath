@@ -60,19 +60,19 @@ tailwind.config = {
 <body class="text-on-surface antialiased min-h-screen flex flex-col washi-bg">
 <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:bg-surface focus:text-on-surface focus:p-3 focus:rounded-lg focus:shadow-lg">Skip to main content</a>
 <div id="sakura-container"></div>
-<nav aria-label="Main navigation" class="hidden md:flex bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 fixed top-0 w-full z-50 justify-between items-center px-6 py-4">
-  <div class="font-headline-md text-headline-md font-bold text-primary">NihonPath</div>
-  <ul class="flex items-center gap-gutter">
-    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="index.html">Home</a></li>
-    <li><a class="block py-1 text-primary font-bold border-b-2 border-primary" href="hiragana.html">Hiragana</a></li>
-    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="katakana.html">Katakana</a></li>
-    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="combined.html">Combined</a></li>
-    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="kanji.html">Kanji</a></li>
-    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="vocab.html">Vocab</a></li>
-  </ul>
-  <a aria-label="Progress" class="text-secondary hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-container-high" href="progress.html">
-    <span class="material-symbols-outlined" aria-hidden="true">account_circle</span>
-  </a>
+<nav aria-label="Main navigation" class="hidden md:flex bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 fixed top-0 w-full z-50 flex-col px-6 py-2">
+  <div class="flex items-center justify-between w-full">
+    <a href="index.html" class="font-headline-md text-headline-md font-bold text-primary">NihonPath</a>
+    <div class="flex items-center gap-4">
+      <a class="text-sm font-body-md text-secondary hover:text-primary transition-colors" href="index.html">Home</a>
+      <a class="text-sm font-body-md text-secondary hover:text-primary transition-colors" href="progress.html">Progress</a>
+    </div>
+  </div>
+  <div class="flex items-center justify-end gap-4 mt-0.5">
+    <a class="text-sm font-body-md text-primary font-bold border-b border-primary" href="hiragana.html">Hiragana</a>
+    <a class="text-sm font-body-md text-secondary hover:text-primary transition-colors" href="combined.html">Combined</a>
+    <a class="text-sm font-body-md text-secondary hover:text-primary transition-colors" href="kanji.html">Kanji</a>
+  </div>
 </nav>
 <main id="main-content" class="relative z-10 flex-grow pt-[96px] pb-[100px] md:pb-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex flex-col gap-stack-lg">
   <section class="text-center">

@@ -1,7 +1,7 @@
 # Workflow State
 
 ## Status
-Vocab page live. Bottom nav Home+Progress. Desktop nav all 6 sections. Kanji 500, 25 visible. Quiz.js supports j2e/e2j.
+Round 14 complete. Desktop nav 2+3 (Hira/Comb/Kanji + NihonPath=Home + Progress). Kanji card hover text 9px.
 
 ## Request
 Build NihonPath — fully static GitHub Pages Japanese learning site. Hiragana, Katakana, Combined, Kanji (JLPT N5-N3). Vocabulary (N5-N1). TTS via Web Speech API. Sakura blossom progression. localStorage lifetime stats. Bottom nav: Home+Progress only.
@@ -204,7 +204,12 @@ python3 -m http.server 8080
 9. **quiz.js extended** — `getAcceptableAnswers()` checks `e.japanese` for vocab entries. `renderQuestion()` displays `japanese` for j2e, `english` for e2j. Prompt text dynamic per mode.
 10. **Progress tracking** — `updateProgress("vocab", correct, correct)` on quiz complete.
 
+## Round 14 — Desktop nav 2+3, Kanji hover text 9px (2026-06-13)
+1. **Desktop nav restructured** — All 7 pages: single row 6 links → 2-row layout. Row 1: NihonPath (left) | Home + Progress (right). Row 2: Hiragana + Combined + Kanji (right-aligned). Katakana/Vocab accessible from home page cards.
+2. **Kanji card hover text** — `kanji.html` meaning span `text-[7px]` → `text-[9px]`, romaji span `text-[7px]` → `text-[9px]`. Matches chart.js label size.
+
 ## Handoff Notes
+- 2026-06-13: Round 14 — desktop nav 2+3, kanji text 9px. All `node --check` pass. Ready for git commit.
 - 2026-06-13: Major restructure. Bottom nav = Home+Progress only. Desktop nav = all 6 sections. Vocab page live at `vocab.html`. Kanji = 500 entries, 25 visible. `quiz.js` handles vocab (j2e/e2j). All `node --check` pass.
 - 2026-06-13: Kanji grid now shows all 100 cards with chart.js card styling. Flat grid, no groups. `makeKanjiCard()`/`updateCardVisual()` mirror `chart.js` functions.
 - 2026-06-12: Proper gojuon chart. Columns = consonant groups, RTL order. Column select buttons top. Vowel buttons right. Empty cells dashed. Mobile same.
