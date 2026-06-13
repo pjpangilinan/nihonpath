@@ -36,6 +36,13 @@ function getCoverage(section, total) {
   return ((s.attempted / total) * 100).toFixed(1);
 }
 
+function getTotalCorrect() {
+  const data = getProgress();
+  let total = 0;
+  for (const key of Object.keys(data)) total += data[key].correct || 0;
+  return total;
+}
+
 function getOverallCoverage() {
   const data = getProgress();
   const totals = { hiragana: 71, katakana: 71, combined: 142, kanji: 100 };

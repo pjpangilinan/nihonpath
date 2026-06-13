@@ -55,6 +55,7 @@ tailwind.config = {
 <link rel="prefetch" href="combined.html">
 <link rel="prefetch" href="kanji.html">
 <link rel="prefetch" href="progress.html">
+<link rel="prefetch" href="vocab.html">
 </head>
 <body class="text-on-surface antialiased min-h-screen flex flex-col washi-bg">
 <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:bg-surface focus:text-on-surface focus:p-3 focus:rounded-lg focus:shadow-lg">Skip to main content</a>
@@ -67,6 +68,7 @@ tailwind.config = {
     <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="katakana.html">Katakana</a></li>
     <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="combined.html">Combined</a></li>
     <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="kanji.html">Kanji</a></li>
+    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="vocab.html">Vocab</a></li>
   </ul>
   <a aria-label="Progress" class="text-secondary hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-container-high" href="progress.html">
     <span class="material-symbols-outlined" aria-hidden="true">account_circle</span>
@@ -102,28 +104,17 @@ tailwind.config = {
       <h2 class="font-headline-md text-headline-md text-on-surface mb-unit group-hover:text-primary transition-colors">Kanji</h2>
       <p class="font-body-md text-body-md text-secondary">Study essential N5 characters.</p>
     </a>
+    <a class="group bg-surface-container-lowest rounded-xl border border-primary-container p-stack-md flex flex-col items-center justify-center text-center transition-transform transition-shadow duration-300 hover:shadow-lg hover:-translate-y-1 relative overflow-hidden md:col-span-2" href="vocab.html">
+      <div class="w-16 h-16 rounded-full bg-primary-container flex items-center justify-center text-primary mb-stack-sm"><span class="material-symbols-outlined text-[32px]" aria-hidden="true">dictionary</span></div>
+      <h2 class="font-headline-md text-headline-md text-on-surface mb-unit group-hover:text-primary transition-colors">Vocabulary</h2>
+      <p class="font-body-md text-body-md text-secondary">5,000 words across all JLPT levels. Japanese ↔ English.</p>
+    </a>
   </section>
 </main>
 <nav aria-label="Main navigation" class="md:hidden bg-surface border-t border-outline-variant/20 shadow-sm fixed bottom-0 left-0 w-full z-50 flex items-stretch overflow-hidden rounded-t-xl">
   <a class="flex-1 flex flex-col items-center justify-center py-2 bg-primary-container text-on-primary-container" href="index.html">
     <span class="material-symbols-outlined text-[20px]" aria-hidden="true" style="font-variation-settings: 'FILL' 1;">home</span>
     <span class="font-bold text-[9px] tracking-normal">Home</span>
-  </a>
-  <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="hiragana.html">
-    <span class="material-symbols-outlined text-[20px]" aria-hidden="true">language_japanese_kana</span>
-    <span class="font-bold text-[9px] tracking-normal">Hiragana</span>
-  </a>
-  <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="katakana.html">
-    <span class="material-symbols-outlined text-[20px]" aria-hidden="true">menu_book</span>
-    <span class="font-bold text-[9px] tracking-normal">Katakana</span>
-  </a>
-  <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="combined.html">
-    <span class="material-symbols-outlined text-[20px]" aria-hidden="true">layers</span>
-    <span class="font-bold text-[9px] tracking-normal">Combined</span>
-  </a>
-  <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="kanji.html">
-    <span class="material-symbols-outlined text-[20px]" aria-hidden="true">translate</span>
-    <span class="font-bold text-[9px] tracking-normal">Kanji</span>
   </a>
   <a class="flex-1 flex flex-col items-center justify-center py-2 text-secondary hover:bg-surface-container-high transition-colors" href="progress.html">
     <span class="material-symbols-outlined text-[20px]" aria-hidden="true">leaderboard</span>
