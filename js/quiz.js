@@ -22,6 +22,10 @@ function startQuiz(container, pool, mode, section, callbacks) {
   renderQuestion();
 
   function getAcceptableAnswers(group) {
+    if (group[0] && group[0].japanese) {
+      if (mode === "j2e") return group.map(e => e.english.toLowerCase().trim()).filter(Boolean);
+      if (mode === "e2j") return group.map(e => e.reading.toLowerCase().trim()).filter(Boolean);
+    }
     if (mode === "meaning") {
       const m = group.map(e =>
         e.meaning.toLowerCase().split("/").map(s => s.trim()).filter(Boolean)
@@ -56,15 +60,23 @@ function startQuiz(container, pool, mode, section, callbacks) {
     }
 
     const group = questions[current];
-    const charsHtml = group.map(e =>
-      `<span class="inline-block font-japanese-character text-[48px] md:text-[64px] text-on-surface select-none">${e.char}</span>`
-    ).join("");
+    const charsHtml = group.map(e => {
+      if (e.japanese) {
+        if (mode === "j2e") return `<span class="inline-block font-japanese-character text-[48px] md:text-[64px] text-on-surface select-none">${e.japanese}</span>`;
+        return `<span class="inline-block font-body-lg text-body-lg text-on-surface select-none">${e.english}</span>`;
+      }
+      return `<span class="inline-block font-japanese-character text-[48px] md:text-[64px] text-on-surface select-none">${e.char}</span>`;
+    }).join("");
     const acceptable = getAcceptableAnswers(group);
+    let promptText = "Type the romaji reading:";
+    if (mode === "meaning") promptText = "Type the English meaning:";
+    else if (mode === "j2e") promptText = "Type the English translation:";
+    else if (mode === "e2j") promptText = "Type the Japanese reading (hiragana):";
     containerEl.innerHTML = `
       <div class="text-center py-6">
         <div class="text-sm text-secondary mb-2">${current + 1} / ${questions.length}</div>
         <div class="flex items-center justify-center gap-4 mb-6">${charsHtml}</div>
-        ${mode === "meaning" ? '<div class="font-body-lg text-body-lg text-secondary mb-4">Type the English meaning:</div>' : '<div class="font-body-lg text-body-lg text-secondary mb-4">Type the romaji reading:</div>'}
+        <div class="font-body-lg text-body-lg text-secondary mb-4">${promptText}</div>
         <div class="flex items-center justify-center gap-3 max-w-md mx-auto">
           <input type="text" id="quiz-input" class="flex-1 px-4 py-3 rounded-xl bg-surface-bright border border-outline-variant text-on-surface text-center text-lg font-body-md outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all" placeholder="Your answer\u2026" aria-label="Type your answer" autofocus>
           <button id="quiz-submit" class="px-6 py-3 rounded-xl bg-primary text-on-primary font-body-md font-semibold hover:bg-surface-tint transition-colors shadow-sm">Submit</button>

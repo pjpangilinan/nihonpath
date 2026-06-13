@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#faf9f6">
-<title>NihonPath — Kanji Explorer</title>
+<title>NihonPath — Vocabulary</title>
 <link href="https://fonts.googleapis.com" rel="preconnect">
 <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans:wght@400;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
@@ -51,11 +51,7 @@ tailwind.config = {
 </script>
 <link rel="stylesheet" href="css/style.css">
 <link rel="prefetch" href="index.html">
-<link rel="prefetch" href="hiragana.html">
-<link rel="prefetch" href="katakana.html">
-<link rel="prefetch" href="combined.html">
 <link rel="prefetch" href="progress.html">
-<link rel="prefetch" href="vocab.html">
 </head>
 <body class="text-on-surface antialiased min-h-screen flex flex-col washi-bg">
 <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[60] focus:bg-surface focus:text-on-surface focus:p-3 focus:rounded-lg focus:shadow-lg">Skip to main content</a>
@@ -67,8 +63,8 @@ tailwind.config = {
     <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="hiragana.html">Hiragana</a></li>
     <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="katakana.html">Katakana</a></li>
     <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="combined.html">Combined</a></li>
-    <li><a class="block py-1 text-primary font-bold border-b-2 border-primary" href="kanji.html">Kanji</a></li>
-    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="vocab.html">Vocab</a></li>
+    <li><a class="block py-1 text-secondary font-body-md hover:text-primary transition-colors" href="kanji.html">Kanji</a></li>
+    <li><a class="block py-1 text-primary font-bold border-b-2 border-primary" href="vocab.html">Vocab</a></li>
   </ul>
   <a aria-label="Progress" class="text-secondary hover:text-primary transition-colors p-2 rounded-full hover:bg-surface-container-high" href="progress.html">
     <span class="material-symbols-outlined" aria-hidden="true">account_circle</span>
@@ -76,31 +72,18 @@ tailwind.config = {
 </nav>
 <main id="main-content" class="relative z-10 flex-grow pt-[96px] pb-[100px] md:pb-stack-lg max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex flex-col gap-stack-lg">
   <section class="mb-0 text-center md:text-left">
-    <h1 class="text-[24px] font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-primary">Kanji Explorer</h1>
-    <p class="font-body-lg text-body-lg text-on-surface-variant">Master the foundations of JLPT N5. Select characters to build your custom quiz.</p>
+    <h1 class="text-[24px] font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-primary">Vocabulary</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant">5,000 Japanese words. Practice Japanese to English or English to Japanese.</p>
   </section>
   <section class="flex items-center gap-2 text-primary font-headline-md text-headline-md px-1">
     <span class="material-symbols-outlined" aria-hidden="true">select_check_box</span>
     <span>Selected: <strong class="font-bold" id="selected-count">0</strong></span>
   </section>
-  <section class="bg-surface-bright rounded-xl border border-outline-variant/30 p-gutter shadow-sm">
-    <div class="grid grid-cols-5 md:grid-cols-10 gap-[4px]" id="kanji-grid"></div>
-  </section>
-  <section class="bg-surface-container-low rounded-xl p-stack-md shadow-sm border border-outline-variant/20 flex flex-col md:flex-row justify-between items-start md:items-center gap-stack-md">
-    <div class="flex flex-wrap gap-stack-sm w-full">
-      <button id="reshuffle-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-bright border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-colors w-full justify-center">
-        <span class="material-symbols-outlined text-[20px]" aria-hidden="true">shuffle</span>
-        <span class="font-body-md font-medium">Reshuffle Grid</span>
-      </button>
-      <button id="select-all-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-surface-bright border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-colors w-full justify-center">
-        <span class="material-symbols-outlined text-[20px]" aria-hidden="true">checklist</span>
-        <span class="font-body-md font-medium">Select All Visible</span>
-      </button>
-    </div>
+  <section class="bg-surface-container-low rounded-xl p-stack-md shadow-sm border border-outline-variant/20">
     <div class="flex flex-col md:flex-row items-center gap-stack-sm w-full">
       <div class="flex bg-surface-container-high rounded-lg p-1 w-full">
-        <button id="mode-romaji" class="flex-1 px-4 py-2 rounded-md bg-surface-bright shadow-sm text-on-surface font-body-md font-medium transition-colors">Test Romaji</button>
-        <button id="mode-meaning" class="flex-1 px-4 py-2 rounded-md text-on-surface-variant hover:text-on-surface font-body-md font-medium transition-colors">Test Meaning</button>
+        <button id="mode-j2e" class="flex-1 px-4 py-2 rounded-md bg-surface-bright shadow-sm text-on-surface font-body-md font-medium transition-colors">Japanese → English</button>
+        <button id="mode-e2j" class="flex-1 px-4 py-2 rounded-md text-on-surface-variant hover:text-on-surface font-body-md font-medium transition-colors">English → Japanese</button>
       </div>
       <button id="start-quiz-btn" class="flex-1 px-6 py-2 rounded-lg bg-primary text-on-primary font-body-md font-medium shadow-sm hover:shadow-md hover:bg-surface-tint transition-all flex items-center justify-center gap-2">
         <span class="material-symbols-outlined text-[20px]" aria-hidden="true">play_arrow</span> Start Quiz
@@ -125,108 +108,28 @@ tailwind.config = {
 <script src="js/sakura.js"></script>
 <script src="js/quiz.js"></script>
 <script>
-let currentDisplay = [];
-let selectedKanji = new Set();
-let quizMode = "romaji";
+let quizMode = "j2e";
 
-const grid = document.getElementById("kanji-grid");
 const quizContainer = document.getElementById("quiz-container");
-const countSpan = document.getElementById("selected-count");
 const startBtn = document.getElementById("start-quiz-btn");
 
-function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-
-function makeKanjiCard(d) {
-  const card = document.createElement("button");
-  card.type = "button";
-  card.className = "kanji-card aspect-[1/1] bg-surface border border-outline-variant/50 rounded-md flex flex-col items-center justify-center hover:shadow-sm transition-[color,background-color,border-color,box-shadow] duration-200 relative group";
-  card.dataset.char = d.char;
-  card.setAttribute("aria-label", `${d.char} - ${d.romaji} - ${d.meaning}`);
-  card.innerHTML = `
-    <div class="absolute top-[1px] right-[1px] w-[2px] h-[2px] rounded-full border border-outline-variant transition-colors dot-indicator"></div>
-    <span class="w-full text-center px-0.5 text-[7px] text-on-surface-variant truncate leading-tight opacity-0 group-hover:opacity-100 transition-opacity absolute top-[2px] left-0">${d.meaning}</span>
-    <span class="font-japanese-character text-[24px] sm:text-[26px] md:text-[32px] text-on-surface">${d.char}</span>
-    <span class="w-full text-center px-0.5 text-[7px] text-secondary truncate leading-tight opacity-0 group-hover:opacity-100 transition-opacity absolute bottom-[2px] left-0">${d.romaji}</span>
-  `;
-  card.addEventListener("click", () => {
-    if (selectedKanji.has(d.char)) {
-      selectedKanji.delete(d.char);
-      updateCardVisual(card, false);
-    } else {
-      selectedKanji.add(d.char);
-      updateCardVisual(card, true);
-    }
-    countSpan.textContent = selectedKanji.size;
-    speak(d.char);
-  });
-  return card;
-}
-
-function updateCardVisual(card, isSelected) {
-  const dot = card.querySelector(".dot-indicator");
-  if (isSelected) {
-    card.classList.add("ring-2", "ring-primary", "bg-primary-container/20");
-    if (dot) { dot.classList.add("bg-primary", "border-primary"); dot.classList.remove("border-outline-variant"); }
-  } else {
-    card.classList.remove("ring-2", "ring-primary", "bg-primary-container/20");
-    if (dot) { dot.classList.remove("bg-primary", "border-primary"); dot.classList.add("border-outline-variant"); }
-  }
-}
-
-function renderKanjiGrid() {
-  currentDisplay = shuffle([...kanjiData]).slice(0, 25);
-  selectedKanji = new Set();
-  countSpan.textContent = 0;
-  grid.innerHTML = "";
-  currentDisplay.forEach(d => {
-    const card = makeKanjiCard(d);
-    grid.appendChild(card);
-  });
-}
-
-document.getElementById("reshuffle-btn").addEventListener("click", renderKanjiGrid);
-
-document.getElementById("select-all-btn").addEventListener("click", () => {
-  const allSelected = selectedKanji.size === currentDisplay.length;
-  if (allSelected) {
-    selectedKanji.clear();
-    document.querySelectorAll(".kanji-card").forEach(c => updateCardVisual(c, false));
-    document.getElementById("select-all-btn").querySelector("span:last-child").textContent = "Select All Visible";
-  } else {
-    currentDisplay.forEach(d => selectedKanji.add(d.char));
-    document.querySelectorAll(".kanji-card").forEach(c => updateCardVisual(c, true));
-    document.getElementById("select-all-btn").querySelector("span:last-child").textContent = "Deselect All";
-  }
-  countSpan.textContent = selectedKanji.size;
+document.getElementById("mode-j2e").addEventListener("click", () => {
+  quizMode = "j2e";
+  document.getElementById("mode-j2e").className = "flex-1 px-4 py-2 rounded-md bg-surface-bright shadow-sm text-on-surface font-body-md font-medium transition-all";
+  document.getElementById("mode-e2j").className = "flex-1 px-4 py-2 rounded-md text-on-surface-variant hover:text-on-surface font-body-md font-medium transition-all";
 });
 
-document.getElementById("mode-romaji").addEventListener("click", () => {
-  quizMode = "romaji";
-  document.getElementById("mode-romaji").className = "flex-1 px-4 py-2 rounded-md bg-surface-bright shadow-sm text-on-surface font-body-md font-medium transition-all";
-  document.getElementById("mode-meaning").className = "flex-1 px-4 py-2 rounded-md text-on-surface-variant hover:text-on-surface font-body-md font-medium transition-all";
-});
-
-document.getElementById("mode-meaning").addEventListener("click", () => {
-  quizMode = "meaning";
-  document.getElementById("mode-meaning").className = "flex-1 px-4 py-2 rounded-md bg-surface-bright shadow-sm text-on-surface font-body-md font-medium transition-all";
-  document.getElementById("mode-romaji").className = "flex-1 px-4 py-2 rounded-md text-on-surface-variant hover:text-on-surface font-body-md font-medium transition-all";
+document.getElementById("mode-e2j").addEventListener("click", () => {
+  quizMode = "e2j";
+  document.getElementById("mode-e2j").className = "flex-1 px-4 py-2 rounded-md bg-surface-bright shadow-sm text-on-surface font-body-md font-medium transition-all";
+  document.getElementById("mode-j2e").className = "flex-1 px-4 py-2 rounded-md text-on-surface-variant hover:text-on-surface font-body-md font-medium transition-all";
 });
 
 startBtn.addEventListener("click", () => {
-  const pool = kanjiData.filter(d => selectedKanji.has(d.char));
-  if (pool.length === 0) return;
   quizContainer.classList.remove("hidden");
   requestAnimationFrame(() => quizContainer.scrollIntoView({ behavior: "smooth", block: "start" }));
-  startQuiz(quizContainer, pool, quizMode, "kanji", {
-    multiChar: quizMode === "romaji",
-    onAnswer: (correct, total) => updateSakura(correct, total),
-    onComplete: (correct, total) => updateProgress("kanji", correct, correct),
+  startQuiz(quizContainer, vocabData, quizMode, "vocab", {
+    onComplete: (correct, total) => updateProgress("vocab", correct, correct),
     onBack: () => {
       quizContainer.classList.add("hidden");
       quizContainer.innerHTML = "";
@@ -236,7 +139,6 @@ startBtn.addEventListener("click", () => {
 });
 
 initSakura("progressive");
-renderKanjiGrid();
 </script>
 </body>
 </html>
