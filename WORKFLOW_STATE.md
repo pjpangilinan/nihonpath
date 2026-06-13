@@ -1,7 +1,7 @@
 # Workflow State
 
 ## Status
-Round 14 complete. Desktop nav 2+3 (Hira/Comb/Kanji + NihonPath=Home + Progress). Kanji card hover text 9px.
+Round 15: home cards 2+3, kanji 30 (10×3), labels match chart.js, char size smaller. Distribution plan drafted.
 
 ## Request
 Build NihonPath — fully static GitHub Pages Japanese learning site. Hiragana, Katakana, Combined, Kanji (JLPT N5-N3). Vocabulary (N5-N1). TTS via Web Speech API. Sakura blossom progression. localStorage lifetime stats. Bottom nav: Home+Progress only.
@@ -208,8 +208,78 @@ python3 -m http.server 8080
 1. **Desktop nav restructured** — All 7 pages: single row 6 links → 2-row layout. Row 1: NihonPath (left) | Home + Progress (right). Row 2: Hiragana + Combined + Kanji (right-aligned). Katakana/Vocab accessible from home page cards.
 2. **Kanji card hover text** — `kanji.html` meaning span `text-[7px]` → `text-[9px]`, romaji span `text-[7px]` → `text-[9px]`. Matches chart.js label size.
 
+## Plan — Make Application Distributable
+
+### Goal
+Ship NihonPath as a self-contained, offline-capable package. Zero CDN dependency.
+
+### Current Blocks
+| Block | Dep | Why Problem |
+|---|---|---|
+| Tailwind CDN | `cdn.tailwindcss.com` | No offline, extra 300ms+ load |
+| Google Fonts | `fonts.googleapis.com` + `fonts.gstatic.com` | Blocks render w/o internet |
+| Material Symbols | `fonts.googleapis.com` (icon font) | Same Google font dep |
+
+### Approach Options
+
+**A) Single-file self-contained HTML** — inline everything
+- Run Tailwind CLI against all HTML to generate final CSS
+- Replace Google Fonts → system font stack (Noto Sans not needed, OS has CJK)
+- Replace Material Symbols → inline SVGs (20 icons only, small)
+- Inline all JS into each page `<script>` tag
+- Pros: Zero external deps. Works offline. Drag-and-drop share.
+- Cons: Each HTML file larger (~50KB). Change = rebuild all.
+
+**B) ZIP bundle with local assets**
+- `wget` mirror all CDN resources into `vendor/` dir
+- Rewrite `<link>`/`<script>` `src` to local paths
+- Package as ZIP
+- Pros: Quick. Low effort.
+- Cons: Still loads Google Fonts from local file (slower than CDN). Bundled font files large.
+
+**C) PWA offline-first**
+- Add `manifest.json` + service worker
+- SW caches Tailwind, fonts, icons on first load
+- Install prompt for mobile
+- Pros: Best UX after first visit.
+- Cons: Requires server to serve SW. First visit needs internet.
+
+### Recommended Plan (A → B → C phased)
+
+**Phase 1 — Remove CDN deps (single-file HTML)**
+1. Run Tailwind CLI `--content "*.html" --output css/tailwind.css` — captures all utility classes
+2. Remove Tailwind CDN `<script>` from all pages, replace with `<link href="css/tailwind.css">`
+3. Replace Google Fonts `@import` with system font fallback in `style.css`
+4. Replace Material Symbols icon spans with inline SVGs (20 unique icons)
+5. Inline all JS modules into each page or keep as separate files in `js/`
+
+**Phase 2 — Self-contained build script**
+1. Write `build.js` (Node) that reads each .html, inlines JS/CSS, outputs to `dist/`
+2. `dist/` = fully static, zero external deps, works offline
+3. Single ZIP: `nihonpath-v1.zip` from `dist/`
+
+**Phase 3 — PWA polish (optional)**
+1. Create `manifest.json` with app name, icons, theme color
+2. Write service worker that caches all assets on install
+3. Enable install prompt on mobile
+
+### Effort Estimate
+| Phase | Files Changed | Effort |
+|---|---|---|
+| Phase 1 | 7 HTML + 1 CSS + 6 JS | ~2h |
+| Phase 2 | 1 new build.js | ~30min |
+| Phase 3 | 2 new files + 7 HTML meta tags | ~1h |
+
+## Round 15 — Kanji 30, labels match chart, home 2+3, smaller chars (2026-06-13)
+1. **Desktop nav reverted** — Back to single-row 6 links + Progress icon. User clarified 2+3 was for home page cards, not desktop nav.
+2. **Home cards 2+3** — `grid-cols-2 md:grid-cols-6`. Top: Hiragana + Katakana (`md:col-span-3`). Bottom: Combined + Kanji + Vocab (`md:col-span-2`).
+3. **Kanji 30 visible** — `slice(0, 25)` → `slice(0, 30)`. Grid `grid-cols-5 md:grid-cols-10` = 10 cols × 3 rows.
+4. **Labels match chart.js** — meaning + romaji spans: `font-label-caps text-label-caps text-[9px] leading-none`. Romaji `bottom-[2px]` → `bottom-[1px]`.
+5. **Smaller char** — kanji card character: `24/26/32` → `20/22/26`.
+6. **Distribution plan** — Added to WORKFLOW_STATE.md. Phased approach: inline CDN deps → build script → PWA.
+
 ## Handoff Notes
-- 2026-06-13: Round 14 — desktop nav 2+3, kanji text 9px. All `node --check` pass. Ready for git commit.
+- 2026-06-13: Round 15 — home 2+3, kanji 30, labels chart.js style, chars smaller, distribution plan in WORKFLOW_STATE.md.
 - 2026-06-13: Major restructure. Bottom nav = Home+Progress only. Desktop nav = all 6 sections. Vocab page live at `vocab.html`. Kanji = 500 entries, 25 visible. `quiz.js` handles vocab (j2e/e2j). All `node --check` pass.
 - 2026-06-13: Kanji grid now shows all 100 cards with chart.js card styling. Flat grid, no groups. `makeKanjiCard()`/`updateCardVisual()` mirror `chart.js` functions.
 - 2026-06-12: Proper gojuon chart. Columns = consonant groups, RTL order. Column select buttons top. Vowel buttons right. Empty cells dashed. Mobile same.

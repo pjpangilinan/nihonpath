@@ -151,7 +151,7 @@ function makeKanjiCard(d) {
   card.innerHTML = `
     <div class="absolute top-[1px] right-[1px] w-[2px] h-[2px] rounded-full border border-outline-variant transition-colors dot-indicator"></div>
     <span class="w-full text-center px-0.5 font-label-caps text-label-caps text-[9px] leading-none text-on-surface-variant truncate opacity-0 group-hover:opacity-100 transition-opacity absolute top-[2px] left-0">${d.meaning}</span>
-    <span class="font-japanese-character text-[24px] sm:text-[26px] md:text-[32px] text-on-surface">${d.char}</span>
+    <span class="font-japanese-character text-[20px] sm:text-[22px] md:text-[26px] text-on-surface">${d.char}</span>
     <span class="font-label-caps text-label-caps text-secondary absolute bottom-[1px] opacity-0 group-hover:opacity-100 transition-opacity text-[9px] leading-none w-full text-center truncate px-0.5 romaji-label">${d.romaji}</span>
   `;
   card.addEventListener("click", () => {
