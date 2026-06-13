@@ -2,8 +2,6 @@
 
 A free, static Japanese learning platform for Hiragana, Katakana, Combined Kana, JLPT N5-N3 Kanji (500 chars), and Vocabulary (200 words).
 
-No backend. No build step for production. No paid APIs. TTS via Web Speech API (ja-JP). Progress via localStorage.
-
 ## Features
 
 | Page | Description |
